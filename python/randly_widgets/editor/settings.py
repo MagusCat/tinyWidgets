@@ -112,7 +112,7 @@ class SettingsMixin:
         anim = W.load_animation()
         box = self.settings_panel
         self.clear(box)
-        box.pack_start(self.header("󱐋", "Animación de los widgets", "Efectos de Wayfire al aparecer/desaparecer",
+        box.pack_start(self.header("󱐋", "Animación de los widgets", "Transiciones nativas al aparecer/desaparecer",
                                    revealer=self.settings_revealer), False, False, 0)
         content = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
         combos = {}
@@ -164,6 +164,14 @@ class SettingsMixin:
         combos["when"] = combo_when
         self.form_row(grid, 6, "Cuándo animar", combo_when)
 
+        self.form_row(grid,7,'Espera del workspace (ms)',spin('workspace_delay',0,3000,50,650),'Pausa tras navegar antes de abrir widgets')
+        self.form_row(grid,8,'Espera antes del IN (ms)',spin('delay_in',0,3000,20,180),'Tiempo con el widget oculto antes de iniciar la entrada')
+        self.form_row(grid,9,'Animaciones simultáneas',spin('max_parallel',1,16,1,4),'Límite de efectos activos; el resto espera su turno')
+        self.form_row(grid,10,'Cuadros por segundo',spin('fps',12,30,1,24),'Frecuencia máxima del motor durante las transiciones')
+        palette=Gtk.Switch(active=bool(anim.get('palette_animation',True)))
+        switches['palette_animation']=palette
+        self.form_row(grid,11,'Animar cambio de paleta',palette,'OUT, nuevos colores e IN sin reabrir ventanas')
+
         # Cascade: advanced, collapsed by default.
         cascade, grid = self.section("Cascada", expanded=False, collapsible=True)
         content.pack_start(cascade, False, False, 0)
@@ -195,6 +203,11 @@ class SettingsMixin:
                 stagger_in=switches["stagger_in"].get_active(),
                 stagger_out=switches["stagger_out"].get_active(),
                 size_mode=size_mode.get_active_id() or 'stable',
+                workspace_delay=int(spins['workspace_delay'].get_value()),
+                delay_in=int(spins['delay_in'].get_value()),
+                max_parallel=int(spins['max_parallel'].get_value()),
+                fps=int(spins['fps'].get_value()),
+                palette_animation=switches['palette_animation'].get_active(),
             )
 
         for combo in list(combos.values()) + [order,size_mode]:

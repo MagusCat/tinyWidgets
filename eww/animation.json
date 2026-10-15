@@ -1,1 +1,18 @@
-{"anim_in":"fade","anim_out":"fade","duration_in":260,"duration_out":180,"size_mode":"stable","when":"reload","order":"config","stagger":15,"jitter":0,"stagger_in":true,"stagger_out":true}
+{
+  "anim_in": "fade",
+  "anim_out": "fade",
+  "duration_in": 260,
+  "duration_out": 180,
+  "size_mode": "stable",
+  "when": "workspace",
+  "order": "config",
+  "stagger": 15,
+  "jitter": 0,
+  "stagger_in": true,
+  "stagger_out": true,
+  "workspace_delay": 650,
+  "delay_in": 180,
+  "max_parallel": 4,
+  "fps": 24,
+  "palette_animation": true
+}

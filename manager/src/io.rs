@@ -56,7 +56,11 @@ pub fn atomic(path: impl AsRef<Path>, data: &[u8]) -> Result<()> {
     result
 }
 pub fn write(path: impl AsRef<Path>, v: &Value) -> Result<()> {
-    atomic(path, &serde_json::to_vec(v)?)
+    let bytes = serde_json::to_vec(v)?;
+    if fs::read(path.as_ref()).ok().as_deref() != Some(bytes.as_slice()) {
+        atomic(path, &bytes)?;
+    }
+    Ok(())
 }
 pub fn stamp(path: impl AsRef<Path>) -> Option<SystemTime> {
     fs::metadata(path).and_then(|m| m.modified()).ok()

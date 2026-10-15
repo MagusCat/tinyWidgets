@@ -195,19 +195,6 @@ pub fn invalidate(p: &Paths, delay: f64) -> Result<f64> {
     )?;
     Ok(deadline)
 }
-fn effect(w: &Widget, anim: &Value, out: bool) -> String {
-    let key = if out { "anim_out" } else { "anim" };
-    let own = w.opts.get(key).and_then(Value::as_str).unwrap_or("global");
-    if own == "global" {
-        anim[if out { "anim_out" } else { "anim_in" }]
-            .as_str()
-            .or_else(|| anim["type"].as_str())
-            .unwrap_or("fade")
-            .into()
-    } else {
-        own.into()
-    }
-}
 fn disable_close(p: &Paths, ids: &[String]) {
     if let Some(views) = p
         .wf("window-rules/list-views", json!({}))
@@ -260,13 +247,14 @@ pub fn sync(
     let ws_token = io::read(p.runtime.join("workspace-transition.json"))["token"].clone();
     let widgets = widgets(p)?;
     let revision = io::stamp(p.config.join("instances.json"));
-    let valid_place = || {
+    let stable_place = || {
         !crate::STOP.load(std::sync::atomic::Ordering::Relaxed)
-            && guard_ready(p, &ws_token)
+            && io::read(p.runtime.join("workspace-transition.json"))["token"] == ws_token
             && p.place().as_ref() == Some(&place)
             && !(p.disabled() && !editing)
             && request.is_none_or(|t| mailbox_current(p, t))
     };
+    let valid_place = || guard_ready(p, &ws_token) && stable_place();
     let valid = || revision == io::stamp(p.config.join("instances.json")) && valid_place();
     if request.is_some() && !valid_place() {
         return Ok(false);
@@ -319,9 +307,19 @@ pub fn sync(
         .filter(|id| !wanted.contains_key(*id))
         .cloned()
         .collect();
+    let anim = io::read(p.config.join("animation.json"));
+    let policy = p.policy();
+    let factor = policy["policy"]["animation_factor"].as_f64().unwrap_or(1.);
+    let animated = crate::animation::enabled(&anim, editing, factor, reloading);
     if !leaving.is_empty() {
         if !valid_place() && request.is_some() {
             return Ok(false);
+        }
+        if animated && stable_place() {
+            let ms = crate::animation::scene(p, &widgets, &leaving, &anim, false, factor, true)?;
+            if ms > 0 && !crate::animation::wait(ms + 80, stable_place) {
+                return Ok(false);
+            }
         }
         close(p, &leaving)?;
         for id in &leaving {
@@ -338,12 +336,6 @@ pub fn sync(
         .filter(|(id, args)| !active.contains_key(*id) || applied.get(*id) != Some(&json!(args)))
         .map(|(id, _)| id.clone())
         .collect();
-    let anim = io::read(p.config.join("animation.json"));
-    let policy = p.policy();
-    let factor = policy["policy"]["animation_factor"].as_f64().unwrap_or(1.);
-    let when = anim["when"].as_str().unwrap_or("workspace");
-    let animated =
-        !editing && factor > 0. && (when == "workspace" || when == "reload" && reloading);
     match anim["order"].as_str().unwrap_or("config") {
         "config" => opening.sort_by_key(|id| widgets.iter().position(|w| &w.id == id).unwrap_or(0)),
         "top_to_bottom" => opening.sort_by_key(|id| {
@@ -361,79 +353,66 @@ pub fn sync(
                 .unwrap_or_default()
         }),
     };
-    let ms = (anim["duration_in"].as_u64().unwrap_or(320) as f64 * factor.clamp(0., 2.)) as u64;
-    let stagger = animated && anim["stagger_in"].as_bool().unwrap_or(false);
-    let gap = if stagger {
-        (anim["stagger"].as_f64().unwrap_or(110.) / 1000.)
-            .min(0.3 / opening.len().saturating_sub(1).max(1) as f64)
-    } else {
-        0.
-    };
-    let mut groups: BTreeMap<String, Vec<String>> = BTreeMap::new();
-    for id in &opening {
-        if !active.contains_key(id) {
-            let w = widgets.iter().find(|w| &w.id == id).unwrap();
-            groups
-                .entry(if animated {
-                    effect(w, &anim, false)
-                } else {
-                    "none".into()
-                })
-                .or_default()
-                .push(id.clone());
-        }
-    }
-    for (e, ids) in groups {
-        if valid() {
-            motion::set(p, &ids, false, &e, if e == "none" { 0 } else { ms })?
-        }
-    }
-    let mut opened = vec![];
+    // Prep every new window with one update; confirm mappings once per batch.
+    let new_ids = opening
+        .iter()
+        .filter(|id| !active.contains_key(*id))
+        .cloned()
+        .collect::<Vec<_>>();
+    motion::set(p, &new_ids, false, "none", 0)?;
+    let mut submitted = Vec::new();
     for id in &opening {
         if !valid() {
             break;
         }
-        let started = io::now();
         let result = p.eww(&wanted[id])?;
         if !result.ok {
             bail!("No se pudo abrir {id}: {}", result.err)
         }
-        let mut mapped = false;
-        for _ in 0..25 {
-            if !valid_place() {
-                break;
-            }
-            if list_active(p)?.get(id)
+        submitted.push(id.clone());
+    }
+    let mut mapped = active.clone();
+    for _ in 0..if submitted.is_empty() { 0 } else { 25 } {
+        mapped = list_active(p)?;
+        if submitted.iter().all(|id| {
+            mapped.get(id)
                 == Some(&format!(
                     "rw-{}",
                     widgets.iter().find(|w| &w.id == id).unwrap().window
                 ))
-            {
-                mapped = true;
-                break;
-            }
-            thread::sleep(Duration::from_millis(20))
-        }
-        if !mapped || !valid_place() {
-            let _ = close(p, &[id.clone()]);
+        }) || !valid_place()
+        {
             break;
         }
-        applied.insert(id.clone(), json!(wanted[id]));
-        io::write(&applied_path, &Value::Object(applied.clone()))?;
-        opened.push(id.clone());
-        if !active.contains_key(id) {
-            let w = widgets.iter().find(|w| &w.id == id).unwrap();
-            let e = if animated {
-                effect(w, &anim, false)
-            } else {
-                "none".into()
-            };
-            motion::set(p, &[id.clone()], true, &e, if e == "none" { 0 } else { ms })?;
+        thread::sleep(Duration::from_millis(20));
+    }
+    let mut opened = Vec::new();
+    for id in &submitted {
+        if mapped.get(id)
+            == Some(&format!(
+                "rw-{}",
+                widgets.iter().find(|w| &w.id == id).unwrap().window
+            ))
+        {
+            applied.insert(id.clone(), json!(wanted[id]));
+            opened.push(id.clone());
+        } else {
+            let _ = close(p, &[id.clone()]);
         }
-        let remaining = gap - (io::now() - started);
-        if remaining > 0. && valid() {
-            thread::sleep(Duration::from_secs_f64(remaining));
-        }
+    }
+    io::write(&applied_path, &Value::Object(applied.clone()))?;
+    if valid_place() {
+        let controls = io::read(p.runtime.join("motion.json"));
+        let reveal = widgets
+            .iter()
+            .filter(|w| {
+                wanted.contains_key(&w.id)
+                    && mapped.contains_key(&w.id)
+                    && (new_ids.contains(&w.id) || controls[&w.id]["reveal"] == false)
+            })
+            .map(|w| w.id.clone())
+            .collect::<Vec<_>>();
+        crate::animation::scene(p, &widgets, &reveal, &anim, true, factor, animated)?;
     }
     if !valid_place() {
         let latest = p.place();

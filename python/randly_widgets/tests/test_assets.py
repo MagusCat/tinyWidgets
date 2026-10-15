@@ -57,3 +57,13 @@ class AssetTests(unittest.TestCase):
                 (folder/'avatar.png').write_bytes(b'new avatar')
                 github.prepare_cache()
                 self.assertEqual((folder/'avatar.png').read_bytes(),b'new avatar')
+
+    def test_animation_budget_settings_round_trip_and_clamp(self):
+        from unittest.mock import patch
+        from randly_widgets import appearance
+        with tempfile.TemporaryDirectory() as tmp,patch.object(appearance,'ANIM_FILE',str(Path(tmp)/'animation.json')):
+            appearance.save_animation(anim_in='vortex',when='workspace',delay_in=240,workspace_delay=700,max_parallel=3,fps=20,palette_animation=True)
+            settings=appearance.load_animation()
+            self.assertEqual((settings['anim_in'],settings['delay_in'],settings['workspace_delay'],settings['max_parallel'],settings['fps']),('vortex',240,700,3,20))
+            appearance.save_animation(max_parallel=999,fps=1,delay_in=-50)
+            settings=appearance.load_animation();self.assertEqual((settings['max_parallel'],settings['fps'],settings['delay_in']),(16,12,0))

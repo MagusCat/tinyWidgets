@@ -80,7 +80,19 @@ widgetctl editor
 
 Add `~/.local/bin` to `PATH` to use the short commands. Use `widgetctl --config /path/to/profile ...` for a separate Eww profile.
 
-`widgetctl theme` updates colors. `widgetctl reload` validates and applies component changes and may reopen windows. After rebuilding/reinstalling the native theme bridge, close the editor and run `widgetctl reload` once to load the new library.
+`widgetctl theme` plays OUT, applies valid colors and plays IN on existing windows. Set `palette_animation=false` for a color-only update. `widgetctl reload` validates and applies component changes and may reopen windows. After rebuilding/reinstalling the native theme bridge, close the editor and run `widgetctl reload` once to load the new library.
+
+## Motion without a pile-up
+
+Animation settings are available in the editor and through the CLI:
+
+```sh
+widgetctl anim when=workspace workspace_delay=650 delay_in=180 max_parallel=4 fps=24 palette_animation=true
+```
+
+`workspace_delay` waits for navigation to settle; `delay_in` adds hidden preparation time before entry. `max_parallel` limits simultaneous effects, including when slow providers become ready together. Additional widgets wait their turn; `fps` caps motion updates between 12 and 30. The motion stream keeps only currently mapped widgets. Power policies and editor mode can reduce or disable effects.
+
+Palette changes animate existing windows without reopening or moving them. A newer workspace transition cancels stale work and restores surviving global widgets. Invalid palettes leave colors and visibility intact.
 
 ## Bring your own silly thing
 

@@ -115,7 +115,7 @@ def wrap_window_roots(text):
                 if depth==0:break
         if root is None:raise BuildError('Ventana sin contenido')
         spans.append(root)
-    prefix='(revealer :transition "crossfade" :duration {(wmotion[wid]?.reveal ?: false) ? (wcfg.m[wid]?.fade_duration ?: "0ms") : (wmotion[wid]?.duration ?: "0ms")} :reveal {(wmotion[wid]?.token == wcfg.m[wid]?.token) && (wcfg.m[wid]?.show ?: false) && (wcfg.r[wid] ?: false)} (transform :class "rw-motion-space" :rotate {wcfg.m[wid]?.rotate ?: 0} :translate-x {wcfg.m[wid]?.x ?: "0%"} :translate-y {wcfg.m[wid]?.y ?: "0%"} :scale-x {wcfg.m[wid]?.sx ?: "100%"} :scale-y {wcfg.m[wid]?.sy ?: "100%"} '
+    prefix='(revealer :transition "crossfade" :duration {(wmotion[wid]?.reveal ?: false) ? (wcfg.m[wid]?.fade_duration ?: "0ms") : (wmotion[wid]?.duration ?: "0ms")} :reveal {((!(wmotion[wid]?.reveal ?: false) || (wmotion[wid]?.token == wcfg.m[wid]?.token)) && (wcfg.m[wid]?.show ?: false) && (wcfg.r[wid] ?: false))} (transform :class "rw-motion-space" :rotate {wcfg.m[wid]?.rotate ?: 0} :translate-x {wcfg.m[wid]?.x ?: "0%"} :translate-y {wcfg.m[wid]?.y ?: "0%"} :scale-x {wcfg.m[wid]?.sx ?: "100%"} :scale-y {wcfg.m[wid]?.sy ?: "100%"} '
     for start,end in reversed(spans):text=text[:start]+prefix+text[start:end]+'))'+text[end:]
     return text
 

@@ -75,7 +75,7 @@ pub fn main(p: &Paths) -> Result<()> {
             }
             Err(e) => {
                 failures += 1;
-                runtime::invalidate(p, 0.5)?;
+                runtime::invalidate(p, crate::animation::workspace_delay(p))?;
                 if failures > 15 {
                     return Err(e);
                 }
@@ -83,7 +83,7 @@ pub fn main(p: &Paths) -> Result<()> {
                 continue;
             }
         };
-        let mut deadline = runtime::invalidate(p, 0.5)?;
+        let mut deadline = runtime::invalidate(p, crate::animation::workspace_delay(p))?;
         let mut leave = false;
         let mut dirty = true;
         let mut seen = io::stamp(p.config.join("instances.json"));
@@ -192,13 +192,13 @@ pub fn main(p: &Paths) -> Result<()> {
                 if ["wset-workspace-changed", "output-wset-changed"]
                     .contains(&event["event"].as_str().unwrap_or(""))
                 {
-                    deadline = runtime::invalidate(p, 0.5)?;
+                    deadline = runtime::invalidate(p, crate::animation::workspace_delay(p))?;
                     leave = true;
                     dirty = true
                 }
             }
             if disconnected {
-                runtime::invalidate(p, 0.5)?;
+                runtime::invalidate(p, crate::animation::workspace_delay(p))?;
                 break;
             }
             thread::sleep(Duration::from_millis(

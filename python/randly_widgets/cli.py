@@ -125,7 +125,22 @@ def main(argv=None):
             elif cmd=='style':
                 if args:save_style(skin=args[0],fx=args[1] if len(args)>1 else None,background=args[2] if len(args)>2 else None)
                 else:print(json.dumps(load_style(),ensure_ascii=False))
-            elif cmd=='anim':save_animation(*args[:2])
+            elif cmd=='anim':
+                from .appearance import ANIM_DEFAULTS,load_animation
+                if not args:print(json.dumps(load_animation(),ensure_ascii=False))
+                else:
+                    positional=[];settings={}
+                    for arg in args:
+                        if '=' not in arg:positional.append(arg);continue
+                        key,value=arg.split('=',1)
+                        if key not in ANIM_DEFAULTS:raise ValueError('Opción de animación desconocida: '+key)
+                        if isinstance(ANIM_DEFAULTS[key],bool):
+                            if value.lower() not in ('true','false','yes','no','1','0','on','off'):raise ValueError('Usa true o false para '+key)
+                            settings[key]=value.lower() in ('true','yes','1','on')
+                        elif isinstance(ANIM_DEFAULTS[key],int):settings[key]=int(value)
+                        else:settings[key]=value
+                    if len(positional)>2:raise ValueError('Usa anim [entrada] [salida] opción=valor')
+                    save_animation(*positional,**settings)
             elif cmd=='photos':raise ValueError('Las fotos ahora usan el proveedor por instancia; no requieren otro listener')
             return 0
         raise ValueError('Comando desconocido: '+cmd)

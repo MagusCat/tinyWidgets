@@ -4,7 +4,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 BIN=Path(os.environ.get('WIDGET_MANAGER_TEST_BIN',str(ROOT/'target/debug/randly-widget-manager')))
 FAKE=r'''#!/usr/bin/python3
-import json,os,sys
+import json,os,sys,time
 from pathlib import Path
 args=sys.argv[4:];path=Path(os.environ['FAKE_EWW_STATE']);s=json.loads(path.read_text());s['commands'].append(args)
 cmd=args[0];output=''
@@ -20,6 +20,12 @@ elif cmd=='kill':s['active']={}
 elif cmd=='update':
  for arg in args[1:]:
   k,_,v=arg.partition('=');s[k]=json.loads(v)
+ if os.environ.get('FAKE_SWITCH_ON_OUT') and any(not v.get('reveal') and v.get('effect') not in (None,'none') for v in s.get('wmotion',{}).values()):Path(os.environ['FAKE_SWITCH']).touch()
+if os.environ.get('FAKE_TIMELINE'):
+ entry={'time':time.monotonic(),'args':args}
+ css=Path(os.environ.get('FAKE_CSS','/absent'))
+ if css.is_file():entry['css']=css.read_text()
+ with open(os.environ['FAKE_TIMELINE'],'a') as f:f.write(json.dumps(entry)+'\n')
 path.write_text(json.dumps(s));print(output)
 '''
 def widget(wid='a',workspace='Global',x=400,y=500):return dict(id=wid,window='api',show=True,anchor='bottom-right',x=x,y=y,opts={'workspace':workspace})
@@ -49,7 +55,9 @@ class NativeManagerTests(unittest.TestCase):
   opens=[c for c in state['commands'] if c[0]=='open'];self.assertEqual(len(opens),1)
   self.assertEqual(opens[0][opens[0].index('--pos')+1],'400x500')
   self.assertEqual(opens[0][opens[0].index('--anchor')+1],'bottom right')
+  applied_stamp=(self.runtime/'eww-widgets-applied.json').stat().st_mtime_ns
   before=len(state['commands']);self.assertEqual(self.invoke('sync').returncode,0)
+  self.assertEqual((self.runtime/'eww-widgets-applied.json').stat().st_mtime_ns,applied_stamp)
   self.assertFalse(any(c[0] in ('open','close') for c in self.state()['commands'][before:]))
  def test_editor_global_filter_is_exclusive(self):
   self.configure([widget('global'),widget('local','Workspace 1')]);self.assertEqual(self.invoke('sync').returncode,0)
@@ -70,6 +78,7 @@ class NativeManagerTests(unittest.TestCase):
   r=self.invoke('sync',FAKE_EMPTY_ACTIVE='1');self.assertEqual(r.returncode,0,r.stderr)
   self.assertFalse(any(c[0] in ('open','close') for c in self.state()['commands'][before:]))
  def test_theme_only_changes_external_css_never_windows_or_generation(self):
+  (self.config/'animation.json').write_text('{"palette_animation":false}')
   self.assertEqual(self.invoke('sync').returncode,0);before=self.state();applied=(self.runtime/'eww-widgets-applied.json').read_bytes();source=self.config/'generated/current/style.scss';stamp=source.stat().st_mtime_ns
   result=self.invoke('theme');self.assertEqual(result.returncode,0,result.stderr)
   css=(self.runtime/'theme.css').read_text();self.assertIn('#112233',css)
@@ -78,8 +87,55 @@ class NativeManagerTests(unittest.TestCase):
   self.assertEqual((self.runtime/'eww-widgets-applied.json').read_bytes(),applied);self.assertEqual(source.stat().st_mtime_ns,stamp)
  def test_invalid_palette_keeps_last_valid_css(self):
   r=self.invoke('theme');self.assertEqual(r.returncode,0,r.stderr);old=(self.runtime/'theme.css').read_bytes()
+  before=self.state()
   (self.config/'_colors.scss').write_text('$primary: invalidcolor;\n');self.assertNotEqual(self.invoke('theme').returncode,0)
-  self.assertEqual((self.runtime/'theme.css').read_bytes(),old);self.assertEqual(self.state()['commands'],[])
+  self.assertEqual((self.runtime/'theme.css').read_bytes(),old);self.assertEqual(self.state(),before)
+ def animation(self,**values):
+  settings={'when':'workspace','anim_in':'zoom','anim_out':'fade','duration_in':120,'duration_out':60,'delay_in':80,'max_parallel':3,'fps':24,'stagger_in':False,'stagger_out':False,**values}
+  (self.config/'animation.json').write_text(json.dumps(settings));return settings
+ def test_batch_mapping_and_bounded_concurrency_for_twenty_widgets(self):
+  self.configure([widget('a'+str(i)) for i in range(20)]);self.animation()
+  r=self.invoke('sync');self.assertEqual(r.returncode,0,r.stderr)
+  commands=self.state()['commands'];self.assertLessEqual(sum(c[0]=='active-windows' for c in commands),3)
+  self.assertEqual(sum(c[0]=='update' for c in commands),2)
+  controls=self.state()['wmotion'];events=[]
+  for motion in controls.values():
+   self.assertTrue(motion['reveal']);self.assertEqual(motion['effect'],'zoom');self.assertGreaterEqual(motion['delay_ms'],80)
+   events.extend([(motion['delay_ms'],1),(motion['delay_ms']+motion['ms'],-1)])
+  current=peak=0
+  for _,delta in sorted(events):current+=delta;peak=max(peak,current)
+  self.assertEqual(peak,3)
+ def test_normal_workspace_exit_waits_for_out_before_close(self):
+  self.configure([widget('global'),widget('local','Workspace 1')]);self.animation()
+  self.assertEqual(self.invoke('sync').returncode,0);self.switch.touch();timeline=self.root/'timing.jsonl'
+  r=self.invoke('sync',FAKE_TIMELINE=str(timeline));self.assertEqual(r.returncode,0,r.stderr)
+  records=[json.loads(line) for line in timeline.read_text().splitlines()]
+  out=next(e for e in records if e['args'][0]=='update' and json.loads(e['args'][1].split('=',1)[1])['local']['effect']=='fade')
+  closed=next(e for e in records if e['args'][0]=='close')
+  self.assertGreaterEqual(closed['time']-out['time'],.12);self.assertEqual(self.state()['active'],{'global':'rw-api'})
+ def test_canceled_exit_recovers_when_returning_to_workspace(self):
+  self.configure([widget('global'),widget('first','Workspace 1'),widget('last','Workspace 2')]);self.animation()
+  self.assertEqual(self.invoke('sync').returncode,0)
+  r=self.invoke('sync','2',FAKE_SWITCH_ON_OUT='1');self.assertEqual(r.returncode,1,r.stderr)
+  self.switch.unlink();self.assertEqual(self.invoke('sync').returncode,0)
+  self.assertTrue(self.state()['wmotion']['first']['reveal']);self.assertEqual(set(self.state()['active']),{'global','first'})
+ def test_palette_out_changes_css_then_in_without_remapping(self):
+  self.animation(palette_animation=False);self.assertEqual(self.invoke('theme').returncode,0)
+  self.assertEqual(self.invoke('sync').returncode,0);before=len(self.state()['commands']);self.animation()
+  (self.config/'_colors.scss').write_text('$primary:#abcdef;\n');timeline=self.root/'palette.jsonl'
+  r=self.invoke('theme',FAKE_TIMELINE=str(timeline),FAKE_CSS=str(self.runtime/'theme.css'));self.assertEqual(r.returncode,0,r.stderr)
+  commands=self.state()['commands'][before:];self.assertFalse(any(c[0] in ('open','close','kill','reload') for c in commands))
+  records=[json.loads(line) for line in timeline.read_text().splitlines() if json.loads(line)['args'][0]=='update']
+  self.assertEqual(len(records),2)
+  self.assertFalse(json.loads(records[0]['args'][1].split('=',1)[1])['a']['reveal']);self.assertIn('#112233',records[0]['css'])
+  self.assertTrue(json.loads(records[1]['args'][1].split('=',1)[1])['a']['reveal']);self.assertIn('#abcdef',records[1]['css'])
+ def test_palette_cancellation_restores_global_on_new_workspace(self):
+  self.configure([widget('global'),widget('local','Workspace 1')]);self.animation(palette_animation=False)
+  self.assertEqual(self.invoke('theme').returncode,0);self.assertEqual(self.invoke('sync').returncode,0);self.animation()
+  (self.config/'_colors.scss').write_text('$primary:#abcdef;\n')
+  r=self.invoke('theme',FAKE_SWITCH_ON_OUT='1');self.assertEqual(r.returncode,0,r.stderr)
+  self.assertTrue(self.state()['wmotion']['global']['reveal']);self.assertFalse(self.state()['wmotion']['local']['reveal'])
+  self.assertIn('#abcdef',(self.runtime/'theme.css').read_text())
  def test_native_edits_preserve_other_widgets_and_custom_metadata(self):
   a=widget('a');a['custom']={'keep':True};b=widget('b');self.configure([a,b])
   r=self.invoke('set','a','x=123','width=320');self.assertEqual(r.returncode,0,r.stderr)
@@ -132,6 +188,16 @@ class NativeManagerTests(unittest.TestCase):
    self.assertTrue(value['a']['show']);self.assertEqual(value['a']['token'],'current');self.assertEqual(value['a']['sx'],'100%')
   finally:
    p.terminate();p.wait(timeout=2);p.stdout.close();p.stderr.close()
+ def test_frames_only_keep_visible_widgets_in_memory(self):
+  self.runtime.mkdir(parents=True,exist_ok=True)
+  values={str(i):{} for i in range(100)}
+  (self.runtime/'data-snapshot.json').write_text(json.dumps({'g':values,'r':{i:True for i in values},'o':{}}))
+  (self.runtime/'eww-widgets-applied.json').write_text('{"1":[]}')
+  (self.runtime/'motion.json').write_text(json.dumps({i:{'token':i,'reveal':True,'effect':'none','ms':0} for i in values}))
+  p=subprocess.Popen([str(BIN),'--config',str(self.config),'frames'],env=self.env,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+  try:
+   self.assertTrue(select.select([p.stdout],[],[],3)[0]);self.assertEqual(set(json.loads(p.stdout.readline())),{'1'})
+  finally:p.terminate();p.wait(timeout=2);p.stdout.close();p.stderr.close()
  def test_invalid_configuration_preserves_open_widgets(self):
   self.assertEqual(self.invoke('sync').returncode,0);before=self.state()
   (self.config/'instances.json').write_text('{bad')

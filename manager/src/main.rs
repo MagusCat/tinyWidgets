@@ -1,3 +1,4 @@
+mod animation;
 mod instances;
 mod io;
 mod motion;
@@ -177,7 +178,7 @@ fn run() -> Result<i32> {
         return Ok(0);
     }
     if command == "theme" {
-        theme::apply(&p)?;
+        theme::change(&p)?;
         return Ok(0);
     }
     if command == "frames" {
