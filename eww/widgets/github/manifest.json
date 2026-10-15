@@ -452,5 +452,8 @@
     "status": "cargando…"
   },
   "decision": "conservar",
-  "execution": "worker"
+  "execution": "worker",
+  "assets": [
+    "avatar-fallback.png"
+  ]
 }

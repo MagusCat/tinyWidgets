@@ -33,6 +33,7 @@ Cada carpeta contiene:
 - `manifest.json`: ID, versión, tamaño, opciones, intervalo, dependencias e información inicial.
 - `view.yuck`: widget/ventana con prefijo `rw-<tipo>`.
 - `style.scss`: selectores limitados a `.rw-desktop.rw-<tipo>`.
+- `assets/`: recursos incluidos; declarar sus nombres relativos en `manifest.json` con `"assets": ["imagen.png"]`. No se comparte carpeta global ni se leen recursos de otro widget.
 - `provider.py`: opcional; recibe un contexto de la instancia y devuelve datos JSON.
 
 Usa `cat` como ejemplo simple y `api` para opciones. No declares listeners globales desde un módulo ni escribas estado de otra instancia. Los proveedores no deben importar ni modificar el editor. Los estilos se rechazan si escapan a la raíz del módulo; no añadas animaciones CSS de entrada/salida.
@@ -48,3 +49,9 @@ Las pruebas estructurales no sustituyen la revisión de tamaño, recorte, teclad
 ## Archivos personales
 
 No se versionan `instances.json` del usuario, perfiles, tareas, hábitos, credenciales, contadores de API, fotos, estado ni generaciones. `eww/instances.json` es un ejemplo vacío; la instalación nunca sobrescribe las instancias existentes. Los nombres internos `randly_widgets` y `randly-widgets` se conservan para compatibilidad con los dotfiles.
+
+## Contrato de recursos
+
+`@ASSETS@/imagen.png` en vistas y estilos apunta sólo a `widgets/<tipo>/assets/imagen.png`. Un proveedor obtiene esa misma ruta con `ctx.asset("imagen.png")`, que exige que esté declarada. Se rechazan archivos inexistentes, rutas absolutas, escapes con `..` y enlaces que salen del componente. El instalador copia recursivamente los recursos junto con el módulo. Para actualizar una instalación existente no elimina la antigua carpeta global: puede seguir siendo utilizada por una generación aún activa o datos propios; las generaciones nuevas ya no dependen de ella.
+
+Recursos remotos deben tener gestión automática de caché, tiempos de espera y fallback incluido; no descargar recursos obligatorios durante la instalación. GitHub es el primer caso: caché por perfil/componente y fallback local independiente del cofre. Las entradas personales como fotos permanecen configurables y no se distribuyen con el componente.

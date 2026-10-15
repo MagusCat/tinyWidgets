@@ -151,6 +151,9 @@ def render(root=None,widgets=None,config_dir=None,include=None):
     seen=set(re.findall(r'\(def(?:window|widget|var|listen|poll)\s+([^\s\[()]+)',yuck))
     for kind,m in selected.items():
         folder=Path(m['path']);text=(folder/'view.yuck').read_text();css=(folder/'style.scss').read_text()
+        if '@ASSETS@' in text+css and not m.get('assets'):
+            raise BuildError(f'{kind}: declara sus recursos en assets del manifiesto')
+        css=css.replace('@ASSETS@', str(folder/'assets'))
         check_forms(text)
         check_styles(css,kind)
         if re.search(r'\(def(?:var|listen|poll)\s+',text):raise BuildError(f'{kind}: usa el proveedor del módulo para datos/estado')
@@ -164,7 +167,7 @@ def render(root=None,widgets=None,config_dir=None,include=None):
         if m.get('provider'):
             try:ast.parse((folder/m['provider']).read_text())
             except (ValueError,SyntaxError,OSError) as exc:raise BuildError(f'{kind}/provider.py: {exc}') from exc
-        text=text.replace('@CTL@',ctl).replace('@NAMESPACE@',namespace).replace('@ASSETS@',str(root/'assets'))
+        text=text.replace('@CTL@',ctl).replace('@NAMESPACE@',namespace).replace('@ASSETS@',str(folder/'assets'))
         # Wrap only window roots; each module keeps its own content and styles.
         text=wrap_window_roots(text)
         # Fixed project paths in helpers must also select the correct profile.

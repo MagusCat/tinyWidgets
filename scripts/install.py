@@ -34,7 +34,7 @@ def install(home):
         finally:
             Path(temporary).unlink(missing_ok=True)
         changed.append(str(dest.relative_to(home)))
-    for folder in ('python/randly_widgets', 'eww/widgets', 'eww/shared', 'eww/assets'):
+    for folder in ('python/randly_widgets', 'eww/widgets', 'eww/shared'):
         base = ROOT/folder
         dest = home/'.local/lib/randly_widgets' if folder.startswith('python/') else config/folder.split('/',1)[1]
         for source in sorted(base.rglob('*')):

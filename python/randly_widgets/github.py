@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """GitHub status for eww (defpoll). Always prints one valid JSON object.
 
-Fetches via the authenticated `gh` CLI; caches to ~/.cache/eww-github.json and
+Fetches via the authenticated `gh` CLI; owns its cache under $XDG_CACHE_HOME/tinyWidgets/<profile>/github and
 falls back to the cache (marked offline) when gh is missing, logged out or offline.
 """
 import datetime as dt
@@ -13,9 +13,22 @@ import time
 import urllib.parse
 import urllib.request
 
-CACHE = os.path.expanduser("~/.cache/eww-github.json")
-AVATAR = os.path.expanduser("~/.cache/eww-github-avatar.png")       # circular, 48x48
-AVATAR_RAW = os.path.expanduser("~/.cache/eww-github-avatar-raw.png")
+from pathlib import Path
+from .paths import PROFILE_KEY
+CACHE_DIR = Path(os.environ.get('XDG_CACHE_HOME', str(Path.home()/'.cache')))/'tinyWidgets'/PROFILE_KEY/'github'
+CACHE = str(CACHE_DIR/'status.json')
+AVATAR = str(CACHE_DIR/'avatar.png')
+AVATAR_RAW = str(CACHE_DIR/'avatar-raw.png')
+
+
+def prepare_cache():
+    """Create owned storage; preserve old cached data during migration."""
+    CACHE_DIR.mkdir(parents=True,exist_ok=True)
+    for old,new in [('eww-github.json',CACHE),('eww-github-avatar.png',AVATAR),('eww-github-avatar-raw.png',AVATAR_RAW)]:
+        source=Path.home()/'.cache'/old
+        if source.is_file() and not Path(new).exists():
+            shutil.copy2(source,new)
+
 AVATAR_MAX_AGE = 24 * 3600  # refresh the picture at most once a day
 AVATAR_SIZE = 48
 WEEKS = 18
@@ -102,6 +115,7 @@ def refresh_avatar():
             return
     except OSError:
         pass
+    prepare_cache()
     url = gh("api", "user", "--jq", ".avatar_url").strip()
     parts = urllib.parse.urlsplit(url)
     if parts.scheme != "https" or parts.hostname != "avatars.githubusercontent.com":
@@ -130,6 +144,7 @@ def refresh_avatar():
 
 def snapshot():
     try:
+        prepare_cache()
         if not shutil.which("gh"):
             raise RuntimeError("gh not found")
         result = fetch()

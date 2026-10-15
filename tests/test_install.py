@@ -50,6 +50,9 @@ class InstallTests(unittest.TestCase):
             installer.install(home)
             config = home/'.config/eww'
             self.assertTrue((config/'generated/current/view.yuck').exists())
+            self.assertTrue((config/'widgets/chest/assets/chest-open.png').exists())
+            self.assertTrue((config/'widgets/github/assets/avatar-fallback.png').exists())
+            self.assertFalse((config/'assets').exists())
             self.assertEqual(json.loads((config/'instances.json').read_text())['widgets'], [])
             self.assertEqual(list(home.rglob("editor-sync-service.json")), [])
 

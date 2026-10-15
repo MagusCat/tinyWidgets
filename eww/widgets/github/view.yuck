@@ -12,7 +12,7 @@
       (box :orientation "h" :space-evenly false :spacing 12
         (box :class "gh-avatar-skel" :visible {(wcfg.g[wid].avatar ?: "") == ""} :valign "center" :width 48 :height 48)
         (box :class "gh-avatar" :visible {(wcfg.g[wid].avatar ?: "") != ""} :valign "center"
-          (image :path {(wcfg.g[wid].avatar ?: "") != "" ? wcfg.g[wid].avatar : "@ASSETS@/chest-closed.png"}
+          (image :path {(wcfg.g[wid].avatar ?: "") != "" ? wcfg.g[wid].avatar : "@ASSETS@/avatar-fallback.png"}
             :image-width 48 :image-height 48))
         (box :orientation "v" :space-evenly false :hexpand true :valign "center"
           (label :class "gh-login" :halign "start" :text {wcfg.g[wid].login != "" ? wcfg.g[wid].login : "GitHub"})

@@ -10,3 +10,5 @@
 - Conservar instancias, perfiles, atajos y archivos personales al instalar.
 - No versionar credenciales, cuotas de API, estado, generaciones ni configuración personal.
 - Mantener el gestor en Rust y el editor GTK en Python. IN/OUT usan transforms/revealer de Eww, sin animaciones CSS.
+
+- Cada componente debe ser autocontenido: recursos incluidos en `widgets/<tipo>/assets/`, inventario `assets` del manifiesto y rutas `@ASSETS@`/`ctx.asset()`. No depender de recursos de otro componente ni de una carpeta global. Recursos descargados/generados se gestionan en caché propia por perfil/componente con fallback local; no requieren copias manuales. Las imágenes personales son entradas explícitas, no dependencias de instalación.

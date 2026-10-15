@@ -36,7 +36,7 @@ Instalación únicamente para el usuario actual:
 - `~/.local/bin/widgetctl`: entrada pública.
 - `~/.local/lib/randly-widgets/`: gestor Rust y puente CSS.
 - `~/.local/lib/randly_widgets/`: editor, proveedores y herramientas Python.
-- `~/.config/eww/{widgets,shared,assets}`: módulos y recursos.
+- `~/.config/eww/{widgets,shared}`: módulos y recursos.
 - `~/.local/state/tinyWidgets/install-backups/`: respaldos de archivos reemplazados y manifiesto.
 
 Las instancias, perfiles, preferencias y módulos adicionales existentes se conservan. Los archivos de módulos incluidos en este repositorio sí se actualizan y se respaldan. Una configuración Eww ajena se rechaza antes de copiar archivos. No se reinicia el escritorio durante la instalación. Para actualizar módulos propios, modifica primero su código en este repositorio y reinstala.
@@ -75,6 +75,12 @@ Para Matugen, usa el fragmento de [docs/matugen.toml](docs/matugen.toml) en tu c
 La paleta del perfil predeterminado se escribe en `~/.local/state/randly-widgets/palette.scss`, fuera del directorio observado por Eww. El hook ejecuta `widgetctl theme`. El gestor compila y valida CSS y el puente lo aplica en el hilo GTK. Una paleta inválida conserva el último CSS válido. **No uses `widgetctl reload` en el hook del wallpaper**: provocaría validaciones visibles y reapertura de widgets.
 
 Para perfiles alternativos (`widgetctl --config /ruta/al/perfil ...`), la paleta se toma de `_colors.scss` dentro del perfil; la separación del archivo observado sólo está implementada para el perfil predeterminado.
+
+## Recursos de cada componente
+
+Los recursos incluidos viven en `widgets/<tipo>/assets/` y se declaran en la lista `assets` de su manifiesto. `@ASSETS@` en Yuck/SCSS se resuelve al directorio del propio componente; los proveedores usan `ctx.asset("archivo.png")`. Instalar la carpeta del componente incluye sus recursos, sin copias manuales ni dependencias de widgets vecinos. El validador detecta archivos faltantes y rutas que escapan del componente.
+
+Los avatares descargados de GitHub usan caché propia por perfil en `$XDG_CACHE_HOME/tinyWidgets/<perfil>/github` (por defecto `~/.cache`), conservan los datos antiguos durante la migración y muestran un recurso incluido cuando no hay avatar. Las fotos e imágenes personales siguen siendo entradas configurables del usuario.
 
 ## Modularidad y documentación
 

@@ -3,6 +3,7 @@
 ## Implementado
 
 - [x] Catálogo modular por manifiesto y estilos acotados.
+- [x] Assets incluidos por componente, inventario validado y caché de GitHub aislada por perfil.
 - [x] Editor GTK con perfiles, edición y filtro Global.
 - [x] Gestor Rust para procesos, workspaces, sincronización, instancias y cuadros de movimiento.
 - [x] Cambio de paleta sin recarga estructural de Eww.

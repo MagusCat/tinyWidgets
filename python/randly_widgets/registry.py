@@ -26,6 +26,8 @@ class Registry:
                     keys.add(o['key'])
                 for name in ('view.yuck','style.scss'):
                     if not (p.parent/name).is_file(): raise ValueError(f'Falta {name}')
+                from .assets import validate_assets
+                validate_assets(p.parent,m.get('assets',[]))
                 provider=m.get('provider')
                 if provider and provider!='provider.py': raise ValueError('El proveedor debe ser provider.py')
                 m['path']=str(p.parent)

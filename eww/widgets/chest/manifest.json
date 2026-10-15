@@ -27,5 +27,19 @@
     "rat_says": ""
   },
   "decision": "conservar",
-  "execution": "worker"
+  "execution": "worker",
+  "assets": [
+    "chest-closed.png",
+    "chest-open.png",
+    "raccoon-0.png",
+    "raccoon-1.png",
+    "raccoon-2.png",
+    "raccoon-3.png",
+    "raccoon-4.png",
+    "raccoon-peek.png",
+    "rat-0.png",
+    "rat-1.png",
+    "rat-2.png",
+    "rat-squeak.png"
+  ]
 }

@@ -15,6 +15,13 @@ class Context:
     stamp: str = ''
     processes: list = field(default_factory=list)
 
+    def asset(self, name):
+        from .assets import asset_path
+        meta=REGISTRY.modules[self.widget['window']]
+        if name not in meta.get('assets',[]):
+            raise ValueError('Recurso no declarado por el componente')
+        return str(asset_path(Path(meta['path']),name))
+
 def load_provider(kind,instance,registry=None):
     m=(registry or REGISTRY).modules[kind]
     path=Path(m['path'])/m['provider']
