@@ -1,0 +1,76 @@
+{
+  "icon": "󰏫",
+  "name": "Nota",
+  "desc": "Texto libre: recordatorios, frases, lo que sea",
+  "group": "generic",
+  "options": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "Nota"
+    },
+    {
+      "key": "icon",
+      "label": "Icono (Nerd Font)",
+      "type": "text",
+      "default": "󰏫"
+    },
+    {
+      "key": "header",
+      "label": "Encabezado",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "text",
+      "label": "Texto",
+      "type": "longtext",
+      "default": "Escribe aquí tu nota.\\nDoble click en el editor para cambiarla."
+    },
+    {
+      "key": "font",
+      "label": "Tamaño de letra",
+      "type": "choice",
+      "default": "Mediano",
+      "choices": [
+        "Pequeño",
+        "Mediano",
+        "Grande"
+      ]
+    },
+    {
+      "key": "accent",
+      "label": "Color",
+      "type": "choice",
+      "default": "Primario",
+      "choices": [
+        "Primario",
+        "Secundario",
+        "Terciario",
+        "Rojo"
+      ]
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "320"
+    }
+  ],
+  "id": "note",
+  "version": 1,
+  "order": 12,
+  "base_id": "nota",
+  "size": [
+    320,
+    220
+  ],
+  "provider": "provider.py",
+  "interval": 60,
+  "requires": [],
+  "initial": {},
+  "enabled": false,
+  "decision": "sin uso",
+  "execution": "inline"
+}

@@ -1,0 +1,42 @@
+.rw-desktop.rw-disks .disk-icon {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-size: 20px;
+  min-width: 38px;
+  min-height: 38px;
+  border-radius: 12px;
+  color: $on_primary_container;
+  background-color: rgba($primary_container, 0.85);
+}
+
+.rw-desktop.rw-disks .disk-icon.home {
+  color: $on_surface;
+  background-color: rgba($tertiary_container, 0.85);
+}
+
+.rw-desktop.rw-disks .disk-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: $on_surface;
+}
+
+.rw-desktop.rw-disks .disk-size {
+  font-size: 12px;
+  font-weight: 500;
+  color: $on_surface_variant;
+}
+
+.rw-desktop.rw-disks .disk-bar trough {
+  min-height: 6px;
+  border-radius: 6px;
+  background-color: rgba($outline_variant, 0.5);
+}
+
+.rw-desktop.rw-disks .disk-bar progress {
+  min-height: 6px;
+  border-radius: 6px;
+  background-color: $primary;
+}
+
+.rw-desktop.rw-disks .disk-bar.home progress {
+  background-color: $secondary;
+}

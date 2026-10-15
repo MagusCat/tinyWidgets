@@ -1,0 +1,22 @@
+(defwidget rw-command-command-card [wid]
+  (eventbox :cursor {(wcfg.o[wid]?.click ?: "yes") == "yes" ? "pointer" : "default"}
+    :onclick {(wcfg.o[wid]?.click ?: "yes") == "yes" ? "@CTL@ rerun ${wid} &" : "true"}
+    (box :class "card gen command-card ${wcfg.o[wid]?.card_class ?: ''} ${wcfg.o[wid]?.pad_class ?: ''} accent-${wcfg.o[wid]?.accent_class ?: 'primary'}"
+      :orientation "v"
+      :space-evenly false :spacing {(wcfg.o[wid]?.pad_class ?: '') == 'pad-none' ? 4 : 8}
+      :style "min-width: ${wcfg.o[wid]?.inner ?: 282}px;"
+      (rw-shared-gen-head :wid wid)
+      (label :class "gen-output ${(wcfg.o[wid]?.mono ?: 'yes') == 'yes' ? 'mono' : ''}"
+        :halign {wcfg.o[wid]?.halign ?: "start"}
+        :xalign {wcfg.o[wid]?.xalign ?: 0}
+        :markup {wcfg.g[wid]?.markup ?: "…"})
+      (label :class "gen-sub command-stamp"
+        :halign {wcfg.o[wid]?.halign ?: "end"}
+        :visible {((wcfg.o[wid]?.stamp ?: "no") == "yes") && ((wcfg.g[wid]?.stamp ?: "") != "")}
+        :text {wcfg.g[wid]?.stamp ?: ""}))))
+
+(defwindow rw-command [wid]
+  :monitor 0 :geometry (geometry :x "64px" :y "110px" :width "0px" :height "0px" :anchor "top left")
+  :stacking "bg" :exclusive false :focusable false :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-command wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-command-command-card :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

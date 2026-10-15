@@ -1,0 +1,6 @@
+# Integrar en ~/.config/matugen/config.toml.
+# Conservar el input_path de tu plantilla SCSS actual.
+[templates.eww]
+input_path = '~/.config/matugen/templates/eww-colors.scss'
+output_path = '~/.local/state/randly-widgets/palette.scss'
+post_hook = '~/.local/bin/widgetctl theme >/dev/null 2>&1 || true'

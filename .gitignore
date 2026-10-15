@@ -1,0 +1,9 @@
+/target/
+/dist/
+__pycache__/
+*.py[cod]
+*.log
+*.lock.tmp
+.env
+.env.*
+*.bak*

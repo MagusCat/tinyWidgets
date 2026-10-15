@@ -1,0 +1,20 @@
+(defwidget rw-cat-kitty [wid]
+  (eventbox :class "kitty-box" :cursor "pointer"
+    :onclick "@CTL@ action ${wid} poke &"
+    (box :class "card kitty" :orientation "h" :space-evenly false :spacing 18
+      :style "min-width: ${wcfg.o[wid]?.inner ?: 382}px;"
+      (box :class "kitty-art" :orientation "v" :space-evenly false
+        (label :xalign 0 :text " ╱╲_╱╲")
+        (label :xalign 0 :text {wcfg.g[wid].face})
+        (label :xalign 0 :text " > ^ <  ${wcfg.g[wid].tail}"))
+      (box :orientation "v" :space-evenly false :valign "center" :hexpand true
+        (label :class "kitty-says" :halign "start"
+          :text {wcfg.g[wid].says != "" ? "${wcfg.g[wid].says} ♥" : "zzz… poke me"})
+        (label :class "kitty-hint" :halign "start" :text {wcfg.o[wid]?.caption ?: "desktop cat"})))))
+
+(defwindow rw-cat [wid]
+  :monitor 0
+  :geometry (geometry :x "64px" :y "110px" :width "0px" :height "0px" :anchor "top left")
+  :stacking "bg" :exclusive false :focusable false :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-cat wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-cat-kitty :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

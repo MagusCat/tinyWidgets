@@ -1,0 +1,16 @@
+(defwidget rw-shared-planner-head [icon title done total pct file]
+  (box :class "pl-head" :orientation "h" :space-evenly false :spacing 10
+    (label :class "pl-icon" :text icon)
+    (box :orientation "v" :space-evenly false :hexpand true :valign "center"
+      (label :class "pl-title" :halign "start" :text title)
+      (label :class "pl-sub" :halign "start" :text "${done}/${total} hoy"))
+    (circular-progress :class "pl-ring" :value pct :thickness 4 :start-at 75 :width 34 :height 34
+      (label :class "pl-pct" :text "${pct}"))
+    (button :class "pl-edit" :tooltip "Editar ${file}"
+      :onclick "~/.config/eww/scripts/planner edit ${file} &" "󰏫")))
+
+(defwidget rw-shared-gen-head [wid]
+  (box :class "gen-head" :orientation "h" :space-evenly false :spacing 10
+    :visible {(wcfg.o[wid]?.header ?: "yes") == "yes"}
+    (label :class "gen-icon" :text {wcfg.o[wid]?.icon ?: ""})
+    (label :class "gen-title" :halign "start" :hexpand true :text {wcfg.o[wid]?.title ?: ""})))

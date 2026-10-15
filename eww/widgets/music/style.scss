@@ -1,0 +1,51 @@
+.rw-desktop.rw-music .music {
+  margin-top: 4px;
+}
+
+.rw-desktop.rw-music .music-icon {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-size: 26px;
+  color: $on_primary_container;
+  background-color: rgba($primary_container, 0.85);
+  border-radius: 14px;
+  min-width: 46px;
+  min-height: 46px;
+}
+
+.rw-desktop.rw-music .music-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: $on_surface;
+}
+
+.rw-desktop.rw-music .music-artist {
+  font-size: 13px;
+  color: $on_surface_variant;
+}
+
+.rw-desktop.rw-music .music-controls {
+  margin-top: 12px;
+}
+
+.rw-desktop.rw-music .ctl {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-size: 20px;
+  color: $on_surface_variant;
+  padding: 6px 12px;
+  border-radius: 12px;
+
+  &:hover {
+    color: $primary;
+    background-color: rgba($surface_container_highest, 0.7);
+  }
+}
+
+.rw-desktop.rw-music .ctl.play {
+  color: $on_primary;
+  background-color: $primary;
+
+  &:hover {
+    color: $on_primary;
+    background-color: $tertiary;
+  }
+}

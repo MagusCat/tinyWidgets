@@ -1,0 +1,78 @@
+{
+  "icon": "󰥔",
+  "name": "Reloj",
+  "desc": "Hora, fecha y saludo",
+  "options": [
+    {
+      "key": "time_format",
+      "label": "Formato de hora",
+      "type": "choice",
+      "default": "24h",
+      "choices": [
+        "24h",
+        "24h con segundos",
+        "12h"
+      ]
+    },
+    {
+      "key": "date_format",
+      "label": "Fecha",
+      "type": "choice",
+      "default": "Lunes, 12 octubre",
+      "choices": [
+        "Lunes, 12 octubre",
+        "12/10/2026",
+        "Lunes",
+        "Oculta"
+      ]
+    },
+    {
+      "key": "lang",
+      "label": "Idioma",
+      "type": "choice",
+      "default": "Español",
+      "choices": [
+        "Español",
+        "English"
+      ]
+    },
+    {
+      "key": "greeting",
+      "label": "Mostrar saludo",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "label",
+      "label": "Etiqueta (ej. Tokio)",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "timezone",
+      "label": "Zona horaria (ej. Asia/Tokyo)",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "420"
+    }
+  ],
+  "id": "clock",
+  "version": 1,
+  "order": 0,
+  "base_id": "reloj",
+  "size": [
+    420,
+    168
+  ],
+  "provider": "provider.py",
+  "interval": 1,
+  "requires": [],
+  "initial": {},
+  "decision": "conservar",
+  "execution": "inline"
+}

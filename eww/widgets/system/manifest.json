@@ -1,0 +1,45 @@
+{
+  "icon": "",
+  "name": "Sistema",
+  "desc": "CPU, RAM y batería",
+  "options": [
+    {
+      "key": "cpu",
+      "label": "CPU",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "ram",
+      "label": "RAM",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "bat",
+      "label": "Batería",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "420"
+    }
+  ],
+  "id": "system",
+  "version": 1,
+  "order": 2,
+  "base_id": "sistema",
+  "size": [
+    360,
+    146
+  ],
+  "provider": null,
+  "interval": 60,
+  "requires": [],
+  "initial": {},
+  "decision": "conservar",
+  "execution": "inline"
+}

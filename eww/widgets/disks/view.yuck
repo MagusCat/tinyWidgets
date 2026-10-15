@@ -1,0 +1,23 @@
+(defwidget rw-disks-disk-row [mount]
+  (box :class "disk-row" :orientation "h" :space-evenly false :spacing 12
+    (label :class "disk-icon ${mount == '/' ? 'root' : 'home'}" :text {mount == "/" ? "󰋊" : "󰉋"})
+    (box :orientation "v" :space-evenly false :hexpand true :spacing 6
+      (box :orientation "h" :space-evenly false
+        (label :class "disk-name" :halign "start" :hexpand true :text mount)
+        (label :class "disk-size" :halign "end"
+          :text "${round((EWW_DISK[mount]?.used ?: 0) / 1073741824, 0)}G / ${round((EWW_DISK[mount]?.total ?: 0) / 1073741824, 0)}G"))
+      (progress :class "disk-bar ${mount == '/' ? 'root' : 'home'}" :orientation "h"
+        :value {EWW_DISK[mount]?.used_perc ?: 0}))))
+
+(defwidget rw-disks-disks-card [wid]
+  (box :class "card disks" :orientation "v" :space-evenly false :spacing 14
+    :style "min-width: ${wcfg.o[wid]?.inner ?: 382}px;"
+    (for m in {wcfg.o[wid]?.mount_list ?: []}
+      (rw-disks-disk-row :mount m))))
+
+(defwindow rw-disks [wid]
+  :monitor 0
+  :geometry (geometry :x "64px" :y "110px" :width "0px" :height "0px" :anchor "top left")
+  :stacking "bg" :exclusive false :focusable false :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-disks wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-disks-disks-card :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

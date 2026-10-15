@@ -1,0 +1,44 @@
+{
+  "icon": "󰄲",
+  "name": "Tareas",
+  "desc": "Tareas diarias y pendientes (tasks.md)",
+  "options": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "Tareas"
+    },
+    {
+      "key": "hide_done",
+      "label": "Ocultar completadas",
+      "type": "bool",
+      "default": "no"
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "380"
+    }
+  ],
+  "id": "tasks",
+  "version": 1,
+  "order": 6,
+  "base_id": "tareas",
+  "size": [
+    360,
+    336
+  ],
+  "provider": "provider.py",
+  "interval": 2,
+  "requires": [],
+  "initial": {
+    "groups": [],
+    "done": 0,
+    "total": 0,
+    "pct": 0
+  },
+  "decision": "conservar",
+  "execution": "worker"
+}

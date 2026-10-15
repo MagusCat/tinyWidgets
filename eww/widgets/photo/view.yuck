@@ -1,0 +1,13 @@
+(defwidget rw-photo-photo-root [wid]
+  (box :class "photo-frame" :visible {(wcfg.g[wid]?.path ?: "") != ""}
+    :style "background-image: url('${wcfg.g[wid]?.path ?: ""}'); min-width: ${wcfg.o[wid]?.inner ?: 322}px; min-height: ${wcfg.o[wid]?.height ?: 360}px; border-radius: ${wcfg.o[wid]?.radius ?: 20}px;"))
+
+(defwindow rw-photo [wid]
+  :monitor 0
+  :geometry (geometry :x "64px" :y "110px" :width "0px" :height "0px" :anchor "top right")
+  :stacking "bg"
+  :exclusive false
+  :focusable false
+  :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-photo wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-photo-photo-root :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

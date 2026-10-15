@@ -1,0 +1,31 @@
+(defwidget rw-tasks-tasks-card [wid]
+  (box :class "card planner tasks" :orientation "v" :space-evenly false :spacing 10
+    :style "min-width: ${wcfg.o[wid]?.inner ?: 342}px;"
+    (rw-shared-planner-head :icon "󰄲" :title {wcfg.o[wid]?.title ?: "Tareas"} :file "tasks"
+      :done {wcfg.g[wid].done} :total {wcfg.g[wid].total} :pct {wcfg.g[wid].pct})
+    (label :class "pl-empty" :visible {wcfg.g[wid].total == 0} :halign "start"
+      :text "Sin tareas: edita wcfg.g[wid].md")
+    (for g in {wcfg.g[wid].groups}
+      (box :orientation "v" :space-evenly false :spacing 4
+        (box :class "pl-group" :orientation "h" :space-evenly false
+          (label :class "pl-group-name" :halign "start" :hexpand true :truncate false
+            :text "${g.daily ? '󰑖 ' : ''}${g.name}")
+          (label :class "pl-group-count" :text "${g.done}/${g.total}"))
+        (for t in {g.items}
+          (eventbox :class "pl-row-box" :cursor "pointer"
+            :visible {!(t.done && (wcfg.o[wid]?.hide_done ?: "no") == "yes")}
+            :onclick "~/.config/eww/scripts/planner task ${t.id} &"
+            (box :class "pl-row task ${t.done ? 'done' : ''}" :orientation "h" :space-evenly false :spacing 10
+              (label :class "pl-check" :text {t.done ? "󰄵" : "󰄱"})
+              (label :class "pl-text" :halign "start" :hexpand true :xalign 0
+                :limit-width {wcfg.o[wid]?.chars ?: 36} :text {t.text}))))))))
+
+(defwindow rw-tasks [wid]
+  :monitor 0
+  :geometry (geometry :x "460px" :y "470px" :width "0px" :height "0px" :anchor "top right")
+  :stacking "bg"
+  :exclusive false
+  :focusable false
+  :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-tasks wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-tasks-tasks-card :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

@@ -1,0 +1,45 @@
+{
+  "icon": "󰎈",
+  "name": "Música",
+  "desc": "Lo que suena ahora (playerctl)",
+  "options": [
+    {
+      "key": "player",
+      "label": "Reproductor (vacío: automático)",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "always",
+      "label": "Mostrar sin música",
+      "type": "bool",
+      "default": "no"
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "420"
+    }
+  ],
+  "id": "music",
+  "version": 1,
+  "order": 1,
+  "base_id": "musica",
+  "size": [
+    420,
+    130
+  ],
+  "provider": "provider.py",
+  "interval": 2,
+  "requires": [
+    "playerctl"
+  ],
+  "initial": {
+    "status": "",
+    "title": "",
+    "artist": ""
+  },
+  "decision": "mejorar",
+  "execution": "worker"
+}

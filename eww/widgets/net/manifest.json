@@ -1,0 +1,70 @@
+{
+  "icon": "󰖩",
+  "name": "Red / Velocidad",
+  "desc": "Velocidad de descarga/subida, IP y estado de red",
+  "group": "generic",
+  "options": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "Red"
+    },
+    {
+      "key": "icon",
+      "label": "Icono (Nerd Font)",
+      "type": "text",
+      "default": "󰖩"
+    },
+    {
+      "key": "header",
+      "label": "Encabezado (icono + título)",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "interval",
+      "label": "Actualizar cada (segundos)",
+      "type": "int",
+      "default": "2"
+    },
+    {
+      "key": "show_ip",
+      "label": "Mostrar IP local",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "accent",
+      "label": "Color",
+      "type": "choice",
+      "default": "Primario",
+      "choices": [
+        "Primario",
+        "Secundario",
+        "Terciario",
+        "Rojo"
+      ]
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "300"
+    }
+  ],
+  "id": "net",
+  "version": 1,
+  "order": 19,
+  "base_id": "red",
+  "size": [
+    300,
+    130
+  ],
+  "provider": "provider.py",
+  "interval": 2,
+  "requires": [],
+  "initial": {},
+  "decision": "conservar",
+  "execution": "inline"
+}

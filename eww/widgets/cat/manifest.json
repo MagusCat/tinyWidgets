@@ -1,0 +1,38 @@
+{
+  "icon": "󰄛",
+  "name": "Gato",
+  "desc": "Gatito animado: click para acariciarlo",
+  "single": true,
+  "options": [
+    {
+      "key": "caption",
+      "label": "Texto",
+      "type": "text",
+      "default": "desktop cat"
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "420"
+    }
+  ],
+  "id": "cat",
+  "version": 1,
+  "order": 4,
+  "base_id": "gato",
+  "size": [
+    420,
+    97
+  ],
+  "provider": "provider.py",
+  "interval": 0.7,
+  "requires": [],
+  "initial": {
+    "face": "( o.o )",
+    "tail": "~",
+    "says": ""
+  },
+  "decision": "conservar",
+  "execution": "inline"
+}

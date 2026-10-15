@@ -1,0 +1,70 @@
+{
+  "icon": "󰄉",
+  "name": "Temporizador / Pomodoro",
+  "desc": "Control de tiempo y técnica Pomodoro para productividad",
+  "group": "generic",
+  "options": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "Pomodoro"
+    },
+    {
+      "key": "icon",
+      "label": "Icono (Nerd Font)",
+      "type": "text",
+      "default": "󰄉"
+    },
+    {
+      "key": "header",
+      "label": "Encabezado",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "focus_min",
+      "label": "Minutos de Enfoque",
+      "type": "int",
+      "default": "25"
+    },
+    {
+      "key": "break_min",
+      "label": "Minutos de Descanso",
+      "type": "int",
+      "default": "5"
+    },
+    {
+      "key": "accent",
+      "label": "Color",
+      "type": "choice",
+      "default": "Primario",
+      "choices": [
+        "Primario",
+        "Secundario",
+        "Terciario",
+        "Rojo"
+      ]
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "280"
+    }
+  ],
+  "id": "timer",
+  "version": 1,
+  "order": 21,
+  "base_id": "pomodoro",
+  "size": [
+    280,
+    140
+  ],
+  "provider": "provider.py",
+  "interval": 1,
+  "requires": [],
+  "initial": {},
+  "decision": "conservar",
+  "execution": "inline"
+}

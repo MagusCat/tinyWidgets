@@ -1,0 +1,56 @@
+{
+  "icon": "󰋩",
+  "name": "Foto fija",
+  "desc": "Muestra una imagen o foto fija en el escritorio",
+  "group": "generic",
+  "options": [
+    {
+      "key": "file",
+      "label": "Archivo de imagen",
+      "type": "file",
+      "default": "~/Imágenes/widget/descarga.png"
+    },
+    {
+      "key": "fit",
+      "label": "Ajuste",
+      "type": "choice",
+      "default": "Cubrir (recortar)",
+      "choices": [
+        "Cubrir (recortar)",
+        "Contener (entera)"
+      ]
+    },
+    {
+      "key": "radius",
+      "label": "Redondeo de esquinas (px)",
+      "type": "int",
+      "default": "20"
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "360"
+    },
+    {
+      "key": "height",
+      "label": "Alto (px)",
+      "type": "size",
+      "default": "360"
+    }
+  ],
+  "id": "image",
+  "version": 1,
+  "order": 10,
+  "base_id": "imagen",
+  "size": [
+    360,
+    360
+  ],
+  "provider": "provider.py",
+  "interval": 60,
+  "requires": [],
+  "initial": {},
+  "decision": "conservar",
+  "execution": "inline"
+}

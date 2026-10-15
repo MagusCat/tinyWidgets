@@ -1,0 +1,161 @@
+{
+  "icon": "",
+  "name": "Comando / Terminal",
+  "desc": "Muestra la salida de un comando cada N segundos",
+  "group": "generic",
+  "options": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "Uptime"
+    },
+    {
+      "key": "icon",
+      "label": "Icono (Nerd Font)",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "header",
+      "label": "Encabezado (icono + título)",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "command",
+      "label": "Comando (sh)",
+      "type": "text",
+      "default": "uptime -p"
+    },
+    {
+      "key": "card_style",
+      "label": "Marco / Fondo",
+      "type": "choice",
+      "default": "Tarjeta clásica",
+      "choices": [
+        "Tarjeta clásica",
+        "Sin marco (transparente)",
+        "Terminal oscuro"
+      ]
+    },
+    {
+      "key": "padding",
+      "label": "Espaciado / Padding",
+      "type": "choice",
+      "default": "Normal",
+      "choices": [
+        "Normal",
+        "Compacto",
+        "Sin relleno"
+      ]
+    },
+    {
+      "key": "align",
+      "label": "Alineación",
+      "type": "choice",
+      "default": "Izquierda",
+      "choices": [
+        "Izquierda",
+        "Centro",
+        "Derecha"
+      ]
+    },
+    {
+      "key": "run",
+      "label": "Ejecutar",
+      "type": "choice",
+      "default": "Cada N segundos",
+      "choices": [
+        "Cada N segundos",
+        "Solo una vez",
+        "Solo al hacer click"
+      ]
+    },
+    {
+      "key": "interval",
+      "label": "Repetir cada (segundos)",
+      "type": "int",
+      "default": "60"
+    },
+    {
+      "key": "click",
+      "label": "Click: volver a ejecutar",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "lines",
+      "label": "Alto fijo (líneas, 0 = auto)",
+      "type": "int",
+      "default": "0"
+    },
+    {
+      "key": "tail",
+      "label": "Mostrar el final",
+      "type": "bool",
+      "default": "no"
+    },
+    {
+      "key": "stamp",
+      "label": "Hora de ejecución",
+      "type": "bool",
+      "default": "no"
+    },
+    {
+      "key": "mono",
+      "label": "Modo terminal",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "chars",
+      "label": "Columnas / Ancho terminal",
+      "type": "int",
+      "default": "80"
+    },
+    {
+      "key": "spacing",
+      "label": "Interlineado",
+      "type": "choice",
+      "default": "Terminal",
+      "choices": [
+        "Terminal",
+        "Normal",
+        "Amplio"
+      ]
+    },
+    {
+      "key": "accent",
+      "label": "Color",
+      "type": "choice",
+      "default": "Primario",
+      "choices": [
+        "Primario",
+        "Secundario",
+        "Terciario",
+        "Rojo"
+      ]
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "320"
+    }
+  ],
+  "id": "command",
+  "version": 1,
+  "order": 13,
+  "base_id": "comando",
+  "size": [
+    360,
+    180
+  ],
+  "provider": "provider.py",
+  "interval": 60,
+  "requires": [],
+  "initial": {},
+  "decision": "conservar",
+  "execution": "worker"
+}

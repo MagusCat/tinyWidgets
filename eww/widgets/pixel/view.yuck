@@ -1,0 +1,20 @@
+(defwidget rw-pixel-pixel-card [wid]
+  (eventbox :class "pixel-box" :cursor "pointer"
+    :onclick "@CTL@ pixel-poke ${wid} &"
+    (box :class "card gen pixel-card ${(wcfg.o[wid]?.card_class ?: '')} ${(wcfg.o[wid]?.pad_class ?: '')} accent-${wcfg.o[wid]?.accent_class ?: 'primary'}"
+      :orientation "v" :space-evenly false :spacing 8
+      :style "min-width: ${wcfg.o[wid]?.inner ?: 260}px;"
+      (rw-shared-gen-head :wid wid)
+      (box :class "pixel-canvas-box" :orientation "v" :space-evenly false :halign "center" :valign "center"
+        (label :class "pixel-art scale-${(wcfg.o[wid]?.size ?: 'Mediano') == 'Pequeño' ? 'small' : ((wcfg.o[wid]?.size ?: 'Mediano') == 'Grande' ? 'large' : 'medium')}"
+          :halign "center" :xalign 0.5
+          :markup {wcfg.g[wid]?.markup ?: "…"}))
+      (box :visible {(wcfg.o[wid]?.show_caption ?: "yes") == "yes"}
+        :orientation "h" :space-evenly false :halign "center"
+        (label :class "gen-sub pixel-caption" :text {wcfg.g[wid]?.caption ?: (wcfg.o[wid]?.sprite ?: "Pixel Art")})))))
+
+(defwindow rw-pixel [wid]
+  :monitor 0 :geometry (geometry :x "64px" :y "110px" :width "0px" :height "0px" :anchor "top left")
+  :stacking "bg" :exclusive false :focusable false :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-pixel wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-pixel-pixel-card :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

@@ -1,0 +1,62 @@
+// Ambient motion only: entry and exit belong to native transform/revealer.
+@keyframes rw-halo {
+  0% { box-shadow: 0 0 6px rgba($primary,.1); }
+  100% { box-shadow: 0 0 6px rgba($primary,.1); }
+  50% { box-shadow: 0 0 20px rgba($primary,.32); }
+}
+@keyframes rw-prism {
+  0% { border-color: $primary; }
+  100% { border-color: $primary; }
+  33% { border-color: $secondary; }
+  66% { border-color: $tertiary; }
+}
+@keyframes rw-shimmer {
+  0% { text-shadow: 0 0 0 transparent; }
+  100% { text-shadow: 0 0 0 transparent; }
+  50% { text-shadow: 0 0 8px rgba($primary,.65); }
+}
+@keyframes rw-heartbeat {
+  0% { opacity: .7; }
+  35% { opacity: .7; }
+  100% { opacity: .7; }
+  12% { opacity: 1; }
+  24% { opacity: 1; }
+}
+@keyframes rw-scan {
+  0% { color: $primary; text-shadow: 0 -2px 0 rgba($primary,.08); }
+  100% { color: $primary; text-shadow: 0 -2px 0 rgba($primary,.08); }
+  50% { color: $tertiary; text-shadow: 0 2px 0 rgba($tertiary,.35); }
+}
+.rw-desktop.wroot.fx-halo { @include rw-surfaces { animation: rw-halo 4s ease-in-out infinite; } }
+.rw-desktop.wroot.fx-prism { @include rw-surfaces { border-width: 2px; border-style: solid; animation: rw-prism 8s linear infinite; } }
+.rw-desktop.wroot.fx-shimmer {
+  .gen-title, .pl-title, .mc-title, .music-title, .clock, .gen-icon, .pl-icon { animation: rw-shimmer 4s ease-in-out infinite; }
+}
+.rw-desktop.wroot.fx-heartbeat {
+  .gen-icon, .pl-icon, .music-icon, .stat-icon { animation: rw-heartbeat 3s ease-in-out infinite; }
+}
+.rw-desktop.wroot.fx-focus {
+  @include rw-surfaces { border-color: rgba($outline_variant,.5); box-shadow: none; }
+  .card:hover, .clock-card:hover, .photo-frame:hover, .image-frame:hover {
+    border-color: $primary; box-shadow: 0 0 12px rgba($primary,.22);
+  }
+}
+.rw-desktop.wroot.fx-scan {
+  .gen-title, .pl-title, .clock, .gen-icon, .pl-icon { animation: rw-scan 5s ease-in-out infinite; }
+}
+// Breathing changes border/text only. No fill, including the icon containers.
+.rw-desktop.wroot.fx-pulse {
+  @include rw-surfaces { background-color: transparent; }
+  .gen-icon, .pl-icon, .mc-icon, .music-icon, .stat-icon, .disk-icon,
+  .api-model-card, .api-chip, .pl-row, .sys-chip { background-color: transparent; }
+}
+// These rules follow all skins/effects and retain the energy/editing policy.
+.rw-desktop.wroot.editing *,
+.rw-desktop.wroot.power-performance * { animation: none; }
+
+.rw-desktop.wroot.editing,
+.rw-desktop.wroot.power-performance {
+  @include rw-surfaces { animation: none; }
+  .gen-title, .pl-title, .mc-title, .music-title, .clock,
+  .gen-icon, .pl-icon, .music-icon, .stat-icon { animation: none; }
+}

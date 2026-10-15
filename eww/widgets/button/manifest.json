@@ -1,0 +1,64 @@
+{
+  "icon": "󰐊",
+  "name": "Botón",
+  "desc": "Ejecuta un comando o abre una app al hacer click",
+  "group": "generic",
+  "options": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "Terminal"
+    },
+    {
+      "key": "subtitle",
+      "label": "Subtítulo",
+      "type": "text",
+      "default": "Abrir kitty"
+    },
+    {
+      "key": "icon",
+      "label": "Icono (Nerd Font)",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "command",
+      "label": "Comando al hacer click",
+      "type": "text",
+      "default": "kitty"
+    },
+    {
+      "key": "accent",
+      "label": "Color",
+      "type": "choice",
+      "default": "Primario",
+      "choices": [
+        "Primario",
+        "Secundario",
+        "Terciario",
+        "Rojo"
+      ]
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "260"
+    }
+  ],
+  "id": "button",
+  "version": 1,
+  "order": 14,
+  "base_id": "boton",
+  "size": [
+    320,
+    220
+  ],
+  "provider": null,
+  "interval": 60,
+  "requires": [],
+  "initial": {},
+  "decision": "conservar",
+  "execution": "inline"
+}

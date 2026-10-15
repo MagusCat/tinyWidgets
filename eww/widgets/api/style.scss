@@ -1,0 +1,85 @@
+.rw-desktop.rw-api .api-card {
+  .api-pct { font-size: 26px; font-weight: 600; color: $on_surface; }
+  .api-label { font-size: 12px; font-weight: 500; color: $on_surface_variant; }
+  .api-sub-label { font-size: 13px; font-weight: 500; color: $on_surface; }
+  .api-sub-pct { font-size: 14px; font-weight: 600; color: $on_surface; }
+  .api-footer { margin-top: 2px; }
+  .api-timer-icon { font-size: 13px; color: $on_surface_variant; }
+  .api-timer-text { font-size: 12px; color: $on_surface_variant; }
+  .api-bar { margin: 4px 0; }
+
+
+  .api-top-row { margin-bottom: 2px; }
+  .api-status-box {
+    padding: 2px 8px;
+    border-radius: 99px;
+    background-color: rgba($surface_container_high, 0.55);
+  }
+  .api-led {
+    min-width: 8px;
+    min-height: 8px;
+    border-radius: 99px;
+    margin-right: 6px;
+    &.alert-normal { background-color: #4ade80; }
+    &.alert-warn { background-color: #fbbf24; }
+    &.alert-crit { background-color: #f87171; }
+  }
+  .api-model-tag {
+    font-size: 11px;
+    font-weight: 600;
+    color: $on_surface;
+  }
+  .api-chip {
+    font-size: 11px;
+    font-weight: 500;
+    color: $on_surface_variant;
+    padding: 2px 8px;
+    border-radius: 8px;
+    background-color: rgba($surface_container_high, 0.45);
+  }
+  .api-pct-modern {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: $on_surface;
+  }
+  .api-pct-sub {
+    font-size: 12px;
+    font-weight: 500;
+    color: $on_surface_variant;
+    margin-bottom: 4px;
+  }
+  .api-bar-modern trough {
+    min-height: 10px;
+    border-radius: 99px;
+  }
+  .api-bar-modern progress {
+    min-height: 10px;
+    border-radius: 99px;
+  }
+  .api-footer-modern {
+    margin-top: 4px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    background-color: rgba($surface_container_high, 0.35);
+  }
+
+
+  .api-label-mini { font-size: 13px; font-weight: 600; color: $on_surface; }
+  .api-pct-mini { font-size: 14px; font-weight: 700; color: $on_surface; }
+}
+
+.rw-desktop.rw-api .api-card {
+  .api-model-card {
+    padding: 6px 10px;
+    border-radius: 12px;
+    background-color: rgba($surface_container_high, 0.40);
+    border: 1px solid rgba($outline_variant, 0.25);
+    margin-bottom: 2px;
+    transition: background-color 150ms ease, border-color 150ms ease;
+    &:hover {
+      background-color: rgba($surface_container_high, 0.68);
+      border-color: rgba($primary, 0.4);
+    }
+  }
+}

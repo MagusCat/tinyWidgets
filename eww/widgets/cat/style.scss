@@ -1,0 +1,14 @@
+.rw-desktop.rw-cat .kitty-says {
+  font-size: 15px;
+  font-weight: 600;
+  color: $on_surface;
+}
+
+.rw-desktop.rw-cat .kitty-hint {
+  font-size: 11px;
+  color: $on_surface_variant;
+}
+
+.rw-desktop.rw-cat .kitty-box:hover .kitty {
+  border-color: rgba($tertiary, 0.6);
+}

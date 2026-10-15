@@ -1,0 +1,21 @@
+(defwidget rw-weather-weather-card [wid]
+  (box :class "card gen weather-card ${(wcfg.o[wid]?.card_class ?: '')} ${(wcfg.o[wid]?.pad_class ?: '')} accent-${wcfg.o[wid]?.accent_class ?: 'primary'}"
+    :orientation "v" :space-evenly false :spacing 8
+    :style "min-width: ${wcfg.o[wid]?.inner ?: 300}px;"
+    (rw-shared-gen-head :wid wid)
+    (box :orientation "h" :space-evenly false :valign "center" :spacing 12
+      (label :class "weather-icon-big" :text {wcfg.g[wid]?.icon ?: "󰖙"})
+      (box :orientation "v" :space-evenly false :valign "center"
+        (label :class "weather-temp" :halign "start" :text {wcfg.g[wid]?.temp ?: "--°C"})
+        (label :class "weather-desc" :halign "start" :text {wcfg.g[wid]?.desc ?: "Cargando…"}))
+      (box :orientation "v" :space-evenly false :valign "center" :halign "end" :hexpand true :spacing 4
+        (label :class "weather-city" :halign "end" :text {wcfg.g[wid]?.city ?: "Local"})
+        (box :orientation "h" :space-evenly false :spacing 4 :halign "end"
+          (label :class "weather-chip" :text "󰖑 ${wcfg.g[wid]?.humidity ?: '--%'}")
+          (label :class "weather-chip" :text "󰬬 ${wcfg.g[wid]?.wind ?: '-- km/h'}"))))))
+
+(defwindow rw-weather [wid]
+  :monitor 0 :geometry (geometry :x "64px" :y "110px" :width "0px" :height "0px" :anchor "top left")
+  :stacking "bg" :exclusive false :focusable false :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-weather wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-weather-weather-card :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

@@ -1,0 +1,40 @@
+(defwidget rw-github-gh-stat [icon value name]
+  (box :class "gh-stat" :orientation "v" :space-evenly false :spacing 2
+    (box :orientation "h" :space-evenly false :spacing 6 :halign "center"
+      (label :class "gh-stat-icon" :text icon)
+      (label :class "gh-stat-value" :text value))
+    (label :class "gh-stat-name" :halign "center" :text name)))
+
+(defwidget rw-github-github-card [wid]
+  (eventbox :class "gh-box" :cursor "pointer"
+    :onclick "xdg-open 'https://github.com/${wcfg.g[wid].login}' >/dev/null 2>&1 &"
+    (box :class "card gh" :orientation "v" :space-evenly false :spacing 12
+      (box :orientation "h" :space-evenly false :spacing 12
+        (box :class "gh-avatar-skel" :visible {(wcfg.g[wid].avatar ?: "") == ""} :valign "center" :width 48 :height 48)
+        (box :class "gh-avatar" :visible {(wcfg.g[wid].avatar ?: "") != ""} :valign "center"
+          (image :path {(wcfg.g[wid].avatar ?: "") != "" ? wcfg.g[wid].avatar : "@ASSETS@/chest-closed.png"}
+            :image-width 48 :image-height 48))
+        (box :orientation "v" :space-evenly false :hexpand true :valign "center"
+          (label :class "gh-login" :halign "start" :text {wcfg.g[wid].login != "" ? wcfg.g[wid].login : "GitHub"})
+          (label :class "gh-sub ${wcfg.g[wid].offline ? 'offline' : ''} ${wcfg.g[wid].status == 'cargando…' ? 'loading' : ''}" :halign "start"
+            :text {wcfg.g[wid].offline ? wcfg.g[wid].status : "updated ${wcfg.g[wid].updated}"})))
+      (box :class "gh-heat" :visible {(wcfg.o[wid]?.heatmap ?: "yes") == "yes"} :orientation "h" :space-evenly false :spacing 3 :halign "center"
+        (for week in {wcfg.g[wid].weeks}
+          (box :class "gh-week" :orientation "v" :space-evenly false :spacing 3
+            (for day in week
+              (box :class "gh-day l${day.l}" :width 13 :height 13)))))
+      (box :class "gh-stats" :orientation "h" :space-evenly true
+        (rw-github-gh-stat :icon "󰊢" :value {wcfg.g[wid].total} :name "contribs")
+        (rw-github-gh-stat :icon "󰈸" :value "${wcfg.g[wid].streak}d" :name "streak")
+        (rw-github-gh-stat :icon "" :value {wcfg.g[wid].prs} :name "open PRs")
+        (rw-github-gh-stat :icon "󰂚" :value {wcfg.g[wid].notifs} :name "inbox")))))
+
+(defwindow rw-github [wid]
+  :monitor 0
+  :geometry (geometry :x "64px" :y "16px" :width "0px" :height "0px" :anchor "bottom right")
+  :stacking "bg"
+  :exclusive false
+  :focusable false
+  :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-github wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-github-github-card :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

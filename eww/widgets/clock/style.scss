@@ -1,0 +1,31 @@
+.rw-desktop.rw-clock .clock-card {
+  padding: 8px 12px 4px 12px;
+}
+
+.rw-desktop.rw-clock .clock {
+  font-size: 92px;
+  font-weight: 200;
+  letter-spacing: -2px;
+  color: $on_surface;
+}
+
+.rw-desktop.rw-clock .date {
+  font-size: 20px;
+  font-weight: 400;
+  color: $primary;
+  margin-top: -6px;
+}
+
+.rw-desktop.rw-clock .greeting {
+  font-size: 15px;
+  font-weight: 300;
+  color: $on_surface_variant;
+  margin-top: 4px;
+}
+
+.rw-desktop.rw-clock .clock-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: $tertiary;
+}

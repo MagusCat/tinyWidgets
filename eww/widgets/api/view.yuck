@@ -1,0 +1,102 @@
+(defwidget rw-api-api-card [wid]
+  (box :class "card gen api-card ${(wcfg.o[wid]?.card_class ?: '')} ${(wcfg.o[wid]?.pad_class ?: '')} style-${wcfg.g[wid]?.layout ?: 'modern'} accent-${(wcfg.o[wid]?.accent ?: 'Auto') == 'Auto' ? (wcfg.g[wid]?.alert ?: 'normal') : (wcfg.o[wid]?.accent_class ?: 'primary')}"
+    :orientation "v" :space-evenly false :spacing 10
+    :style "min-width: ${wcfg.o[wid]?.inner ?: 280}px; ${wcfg.o[wid]?.custom_style ?: ''}"
+    (rw-shared-gen-head :wid wid)
+
+    ;; 0. Multi-modelos (Gemini, Codex, etc.)
+    (box :visible {(wcfg.g[wid]?.has_models ?: false) == true}
+      :orientation "v" :space-evenly false :spacing 8
+      (for m in {wcfg.g[wid]?.models ?: []}
+        (box :class "api-model-card" :orientation "v" :space-evenly false :spacing 4
+          (box :class "api-top-row" :orientation "h" :space-evenly false
+            (box :class "api-status-box" :orientation "h" :space-evenly false :valign "center" :spacing 6
+              (box :class "api-led alert-${m.alert ?: 'normal'}")
+              (label :class "api-model-tag" :text {m.name ?: m.label}))
+            (label :class "api-chip" :halign "end" :hexpand true
+              :visible {((wcfg.o[wid]?.show_detail ?: "yes") == "yes") && ((m.detail ?: "") != "")}
+              :text {m.detail ?: ""}))
+          (box :visible {(wcfg.o[wid]?.show_pct ?: "yes") == "yes"}
+            :orientation "h" :space-evenly false :spacing 6 :valign "baseline"
+            (label :class "api-pct-mini" :halign "start" :text {m.pct_text ?: "0%"})
+            (label :class "api-timer-text" :halign "end" :hexpand true :text {m.resets ?: ""}))
+          (progress :visible {(wcfg.o[wid]?.show_bar ?: "yes") == "yes"}
+            :class "gen-bar api-bar api-bar-modern" :orientation "h" :value {m.pct ?: 0}))))
+
+    ;; 1. Layout: Moderno (Glow + Chips)
+    (box :visible {((wcfg.g[wid]?.has_models ?: false) == false) && ((wcfg.g[wid]?.layout ?: "modern") == "modern")}
+      :orientation "v" :space-evenly false :spacing 8
+      (box :class "api-top-row" :orientation "h" :space-evenly false
+        (box :class "api-status-box" :orientation "h" :space-evenly false :valign "center"
+          (box :class "api-led alert-${wcfg.g[wid]?.alert ?: 'normal'}")
+          (label :class "api-model-tag" :text {wcfg.g[wid]?.label ?: (wcfg.g[wid]?.subtitle ?: "API")}))
+        (label :class "api-chip" :halign "end" :hexpand true
+          :visible {((wcfg.o[wid]?.show_detail ?: "yes") == "yes") && ((wcfg.g[wid]?.detail ?: "") != "")}
+          :text {wcfg.g[wid]?.detail ?: ""}))
+      (box :visible {(wcfg.o[wid]?.show_pct ?: "yes") == "yes"}
+        :orientation "h" :space-evenly false :spacing 8 :valign "baseline"
+        (label :class "api-pct-modern" :halign "start" :text {wcfg.g[wid]?.pct_text ?: "0%"})
+        (label :class "api-pct-sub" :halign "start" :text "cuota"))
+      (progress :visible {(wcfg.o[wid]?.show_bar ?: "yes") == "yes"}
+        :class "gen-bar api-bar api-bar-modern" :orientation "h" :value {wcfg.g[wid]?.pct ?: 0})
+      (box :visible {((wcfg.o[wid]?.show_timer ?: "yes") == "yes") && ((wcfg.g[wid]?.resets ?: "") != "")}
+        :class "api-footer-modern" :orientation "h" :space-evenly false :spacing 6
+        (label :class "api-timer-icon" :text "󱫡")
+        (label :class "api-timer-text" :halign "start" :text {wcfg.g[wid]?.resets ?: ""})))
+
+    ;; 2. Layout: Minimalista
+    (box :visible {((wcfg.g[wid]?.has_models ?: false) == false) && ((wcfg.g[wid]?.layout ?: "modern") == "minimal")}
+      :orientation "v" :space-evenly false :spacing 6
+      (box :orientation "h" :space-evenly false :spacing 8 :valign "center"
+        (box :class "api-led alert-${wcfg.g[wid]?.alert ?: 'normal'}")
+        (label :class "api-label-mini" :halign "start" :hexpand true :text {wcfg.g[wid]?.label ?: ""})
+        (label :visible {(wcfg.o[wid]?.show_pct ?: "yes") == "yes"}
+          :class "api-pct-mini" :halign "end" :text {wcfg.g[wid]?.pct_text ?: "0%"}))
+      (progress :visible {(wcfg.o[wid]?.show_bar ?: "yes") == "yes"}
+        :class "gen-bar api-bar" :orientation "h" :value {wcfg.g[wid]?.pct ?: 0})
+      (box :visible {((wcfg.o[wid]?.show_timer ?: "yes") == "yes") && ((wcfg.g[wid]?.resets ?: "") != "")}
+        :orientation "h" :space-evenly false :spacing 4
+        (label :class "api-timer-icon" :text "󱫡")
+        (label :class "api-timer-text" :halign "start" :text {wcfg.g[wid]?.resets ?: ""})))
+
+    ;; 3. Layout: Doble barra (Sesión 5h + Semanal 7d)
+    (box :visible {((wcfg.g[wid]?.has_models ?: false) == false) && ((wcfg.g[wid]?.layout ?: "modern") == "dual")}
+      :orientation "v" :space-evenly false :spacing 10
+      (box :orientation "v" :space-evenly false :spacing 4
+        (box :orientation "h" :space-evenly false
+          (label :class "api-sub-label" :halign "start" :text {wcfg.g[wid]?.bar1_label ?: "Sesión"})
+          (label :visible {(wcfg.o[wid]?.show_pct ?: "yes") == "yes"}
+            :class "api-sub-pct" :halign "end" :hexpand true :text {wcfg.g[wid]?.bar1_text ?: "0%"}))
+        (progress :visible {(wcfg.o[wid]?.show_bar ?: "yes") == "yes"}
+          :class "gen-bar api-bar" :orientation "h" :value {wcfg.g[wid]?.bar1_pct ?: 0})
+        (label :visible {((wcfg.o[wid]?.show_timer ?: "yes") == "yes") && ((wcfg.g[wid]?.bar1_resets ?: "") != "")}
+          :class "api-timer-text" :halign "start" :text {wcfg.g[wid]?.bar1_resets ?: ""}))
+      (box :orientation "v" :space-evenly false :spacing 4
+        (box :orientation "h" :space-evenly false
+          (label :class "api-sub-label" :halign "start" :text {wcfg.g[wid]?.bar2_label ?: "Semanal"})
+          (label :visible {(wcfg.o[wid]?.show_pct ?: "yes") == "yes"}
+            :class "api-sub-pct" :halign "end" :hexpand true :text {wcfg.g[wid]?.bar2_text ?: "0%"}))
+        (progress :visible {(wcfg.o[wid]?.show_bar ?: "yes") == "yes"}
+          :class "gen-bar api-bar" :orientation "h" :value {wcfg.g[wid]?.bar2_pct ?: 0})
+        (label :visible {((wcfg.o[wid]?.show_timer ?: "yes") == "yes") && ((wcfg.g[wid]?.bar2_resets ?: "") != "")}
+          :class "api-timer-text" :halign "start" :text {wcfg.g[wid]?.bar2_resets ?: ""})))
+
+    ;; 4. Layout: Clásico
+    (box :visible {((wcfg.g[wid]?.has_models ?: false) == false) && ((wcfg.g[wid]?.layout ?: "modern") == "classic")}
+      :orientation "v" :space-evenly false :spacing 6
+      (box :orientation "h" :space-evenly false
+        (label :visible {(wcfg.o[wid]?.show_pct ?: "yes") == "yes"}
+          :class "api-pct" :halign "start" :text {wcfg.g[wid]?.pct_text ?: "0%"})
+        (label :class "api-label" :halign "end" :hexpand true :text {wcfg.g[wid]?.label ?: ""}))
+      (progress :visible {(wcfg.o[wid]?.show_bar ?: "yes") == "yes"}
+        :class "gen-bar api-bar" :orientation "h" :value {wcfg.g[wid]?.pct ?: 0})
+      (box :visible {((wcfg.o[wid]?.show_timer ?: "yes") == "yes") && ((wcfg.g[wid]?.resets ?: "") != "")}
+        :class "api-footer" :orientation "h" :space-evenly false :spacing 6
+        (label :class "api-timer-icon" :text "󱫡")
+        (label :class "api-timer-text" :halign "start" :text {wcfg.g[wid]?.resets ?: ""})))))
+
+(defwindow rw-api [wid]
+  :monitor 0 :geometry (geometry :x "64px" :y "110px" :width "0px" :height "0px" :anchor "top left")
+  :stacking "bg" :exclusive false :focusable false :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-api wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-api-api-card :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

@@ -1,0 +1,70 @@
+{
+  "icon": "󰖙",
+  "name": "Clima",
+  "desc": "Temperatura, pronóstico y estado del clima en vivo",
+  "group": "generic",
+  "options": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "Clima"
+    },
+    {
+      "key": "icon",
+      "label": "Icono (Nerd Font)",
+      "type": "text",
+      "default": "󰖙"
+    },
+    {
+      "key": "header",
+      "label": "Encabezado",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "city",
+      "label": "Ciudad (vacío = auto por IP)",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "interval",
+      "label": "Actualizar cada (minutos)",
+      "type": "int",
+      "default": "15"
+    },
+    {
+      "key": "accent",
+      "label": "Color",
+      "type": "choice",
+      "default": "Primario",
+      "choices": [
+        "Primario",
+        "Secundario",
+        "Terciario",
+        "Rojo"
+      ]
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "300"
+    }
+  ],
+  "id": "weather",
+  "version": 1,
+  "order": 20,
+  "base_id": "clima",
+  "size": [
+    300,
+    150
+  ],
+  "provider": "provider.py",
+  "interval": 900,
+  "requires": [],
+  "initial": {},
+  "decision": "conservar",
+  "execution": "worker"
+}

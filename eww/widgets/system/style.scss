@@ -1,0 +1,23 @@
+.rw-desktop.rw-system .stat-icon {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-size: 24px;
+  color: $on_surface;
+}
+
+.rw-desktop.rw-system .ring {
+  min-width: 88px;
+  min-height: 88px;
+  background-color: rgba($outline_variant, 0.5);
+}
+
+.rw-desktop.rw-system .ring.cpu { color: $primary; }
+
+.rw-desktop.rw-system .ring.ram { color: $secondary; }
+
+.rw-desktop.rw-system .ring.bat { color: $tertiary; }
+
+.rw-desktop.rw-system .stat-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: $on_surface_variant;
+}

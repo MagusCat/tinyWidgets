@@ -1,0 +1,13 @@
+(defwidget rw-image-image-card [wid]
+  (box :class "photo-frame image-frame"
+    :style "${(wcfg.o[wid]?.file_resolved ?: '') != '' ? 'background-image: url(\'' + wcfg.o[wid]?.file_resolved + '\'); background-size: ' + (wcfg.o[wid]?.bg_size ?: 'cover') + ';' : ''} min-width: ${wcfg.o[wid]?.inner ?: 320}px; min-height: ${wcfg.o[wid]?.height ?: 320}px; border-radius: ${wcfg.o[wid]?.radius ?: 20}px;"
+    (box :visible {(wcfg.o[wid]?.file_resolved ?: "") == ""}
+      :orientation "v" :space-evenly false :valign "center" :halign "center" :spacing 8
+      (label :class "gen-icon" :text "󰋩")
+      (label :class "gen-sub" :text "Elige una foto en el editor"))))
+
+(defwindow rw-image [wid]
+  :monitor 0 :geometry (geometry :x "64px" :y "110px" :width "0px" :height "0px" :anchor "top right")
+  :stacking "bg" :exclusive false :focusable false :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-image wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-image-image-card :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

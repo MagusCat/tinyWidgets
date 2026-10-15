@@ -1,0 +1,44 @@
+{
+  "icon": "󰸗",
+  "name": "Hábitos",
+  "desc": "Hábitos diarios con racha (habits.conf)",
+  "options": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "Hábitos"
+    },
+    {
+      "key": "week",
+      "label": "Mostrar últimos 7 días",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "380"
+    }
+  ],
+  "id": "habits",
+  "version": 1,
+  "order": 5,
+  "base_id": "habitos",
+  "size": [
+    360,
+    308
+  ],
+  "provider": "provider.py",
+  "interval": 2,
+  "requires": [],
+  "initial": {
+    "items": [],
+    "done": 0,
+    "total": 0,
+    "pct": 0
+  },
+  "decision": "conservar",
+  "execution": "worker"
+}

@@ -1,0 +1,142 @@
+{
+  "icon": "󰚩",
+  "name": "Uso de API / IA",
+  "desc": "Cuota y límites de Claude, Gemini, OpenAI u otra API",
+  "group": "generic",
+  "options": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "Uso de IA"
+    },
+    {
+      "key": "icon",
+      "label": "Icono (Nerd Font)",
+      "type": "text",
+      "default": "󰚩"
+    },
+    {
+      "key": "header",
+      "label": "Encabezado (icono + título)",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "provider",
+      "label": "Proveedor / Origen",
+      "type": "choice",
+      "default": "Claude (Sesión)",
+      "choices": [
+        "Claude (Sesión)",
+        "Claude (Semanal)",
+        "Claude (Ambas)",
+        "Gemini",
+        "Gemini 1.5 Flash",
+        "Gemini 1.5 Pro",
+        "Codex",
+        "Lectura de archivo JSON",
+        "Comando o API"
+      ]
+    },
+    {
+      "key": "json_path",
+      "label": "Ruta archivo JSON",
+      "type": "file",
+      "default": ""
+    },
+    {
+      "key": "command",
+      "label": "Comando o curl de API",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "style",
+      "label": "Estilo visual",
+      "type": "choice",
+      "default": "Moderno (Glow + Chips)",
+      "choices": [
+        "Moderno (Glow + Chips)",
+        "Minimalista",
+        "Doble barra",
+        "Clásico"
+      ]
+    },
+    {
+      "key": "accent",
+      "label": "Color / Acento",
+      "type": "choice",
+      "default": "Auto",
+      "choices": [
+        "Auto",
+        "Primario",
+        "Secundario",
+        "Terciario",
+        "Rojo",
+        "Cian",
+        "Verde",
+        "Púrpura",
+        "Ámbar",
+        "Rosa",
+        "Personalizado"
+      ]
+    },
+    {
+      "key": "custom_color",
+      "label": "Color Hex (si Personalizado)",
+      "type": "text",
+      "default": "#a855f7"
+    },
+    {
+      "key": "show_bar",
+      "label": "Mostrar barra de progreso",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "show_pct",
+      "label": "Mostrar porcentaje",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "show_timer",
+      "label": "Mostrar tiempo restante",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "show_detail",
+      "label": "Mostrar detalles (usado/total)",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "interval",
+      "label": "Actualizar cada (segundos)",
+      "type": "int",
+      "default": "30"
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "340"
+    }
+  ],
+  "id": "api",
+  "version": 1,
+  "order": 11,
+  "base_id": "api",
+  "size": [
+    340,
+    160
+  ],
+  "provider": "provider.py",
+  "interval": 30,
+  "requires": [],
+  "initial": {},
+  "decision": "mejorar",
+  "execution": "worker"
+}

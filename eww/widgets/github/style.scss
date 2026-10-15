@@ -1,0 +1,114 @@
+.rw-desktop.rw-github .gh-icon {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-size: 22px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 12px;
+  color: $on_primary_container;
+  background-color: rgba($primary_container, 0.85);
+}
+
+.rw-desktop.rw-github .gh-login {
+  font-size: 15px;
+  font-weight: 600;
+  color: $on_surface;
+}
+
+.rw-desktop.rw-github .gh-sub {
+  font-size: 11px;
+  color: $on_surface_variant;
+}
+
+.rw-desktop.rw-github .gh-sub.offline {
+  color: $error;
+}
+
+.rw-desktop.rw-github .gh-day {
+  min-width: 13px;
+  min-height: 13px;
+  border-radius: 3px;
+}
+
+.rw-desktop.rw-github .gh-day.l-1 { background-color: transparent; }
+
+.rw-desktop.rw-github .gh-day.l0 { background-color: rgba($outline_variant, 0.55); }
+
+.rw-desktop.rw-github .gh-day.l1 { background-color: $primary_container; }
+
+.rw-desktop.rw-github .gh-day.l2 { background-color: mix($primary, $primary_container, 40%); }
+
+.rw-desktop.rw-github .gh-day.l3 { background-color: mix($primary, $primary_container, 70%); }
+
+.rw-desktop.rw-github .gh-day.l4 { background-color: $primary; }
+
+.rw-desktop.rw-github .gh-stat-icon {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-size: 15px;
+  color: $tertiary;
+}
+
+.rw-desktop.rw-github .gh-stat-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: $on_surface;
+}
+
+.rw-desktop.rw-github .gh-stat-name {
+  font-size: 11px;
+  color: $on_surface_variant;
+}
+
+.rw-desktop.rw-github .gh-box:hover .gh {
+  border-color: rgba($primary, 0.6);
+}
+
+.rw-desktop.rw-github .gh-day.ls {
+  background-color: rgba($outline_variant, 0.25);
+  animation: gh-pulse 1.4s ease-in-out infinite;
+}
+
+.rw-desktop.rw-github .gh-heat > .gh-week:nth-child(1) .gh-day.ls { animation-delay: 0ms; }
+
+.rw-desktop.rw-github .gh-heat > .gh-week:nth-child(2) .gh-day.ls { animation-delay: 70ms; }
+
+.rw-desktop.rw-github .gh-heat > .gh-week:nth-child(3) .gh-day.ls { animation-delay: 140ms; }
+
+.rw-desktop.rw-github .gh-heat > .gh-week:nth-child(4) .gh-day.ls { animation-delay: 210ms; }
+
+.rw-desktop.rw-github .gh-heat > .gh-week:nth-child(5) .gh-day.ls { animation-delay: 280ms; }
+
+.rw-desktop.rw-github .gh-heat > .gh-week:nth-child(6) .gh-day.ls { animation-delay: 350ms; }
+
+.rw-desktop.rw-github .gh-heat > .gh-week:nth-child(7) .gh-day.ls { animation-delay: 420ms; }
+
+.rw-desktop.rw-github .gh-heat > .gh-week:nth-child(8) .gh-day.ls { animation-delay: 490ms; }
+
+.rw-desktop.rw-github .gh-heat > .gh-week:nth-child(9) .gh-day.ls { animation-delay: 560ms; }
+
+.rw-desktop.rw-github .gh-heat > .gh-week:nth-child(10) .gh-day.ls { animation-delay: 630ms; }
+
+.rw-desktop.rw-github .gh-heat > .gh-week:nth-child(11) .gh-day.ls { animation-delay: 700ms; }
+
+.rw-desktop.rw-github .gh-heat > .gh-week:nth-child(12) .gh-day.ls { animation-delay: 770ms; }
+
+.rw-desktop.rw-github .gh-heat > .gh-week:nth-child(13) .gh-day.ls { animation-delay: 840ms; }
+
+.rw-desktop.rw-github .gh-heat > .gh-week:nth-child(14) .gh-day.ls { animation-delay: 910ms; }
+
+.rw-desktop.rw-github .gh-heat > .gh-week:nth-child(15) .gh-day.ls { animation-delay: 980ms; }
+
+.rw-desktop.rw-github .gh-heat > .gh-week:nth-child(16) .gh-day.ls { animation-delay: 1050ms; }
+
+.rw-desktop.rw-github .gh-heat > .gh-week:nth-child(17) .gh-day.ls { animation-delay: 1120ms; }
+
+.rw-desktop.rw-github .gh-heat > .gh-week:nth-child(18) .gh-day.ls { animation-delay: 1190ms; }
+
+.rw-desktop.rw-github .gh-sub.loading { animation: gh-blink 1.4s ease-in-out infinite; }
+
+.rw-desktop.rw-github .gh-avatar-skel {
+  border-radius: 99px;
+  min-width: 48px;
+  min-height: 48px;
+  background-color: rgba($outline_variant, 0.35);
+  animation: gh-blink 1.4s ease-in-out infinite;
+}

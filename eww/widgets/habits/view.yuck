@@ -1,0 +1,28 @@
+(defwidget rw-habits-habits-card [wid]
+  (box :class "card planner habits" :orientation "v" :space-evenly false :spacing 10
+    :style "min-width: ${wcfg.o[wid]?.inner ?: 342}px;"
+    (rw-shared-planner-head :icon "󰸗" :title {wcfg.o[wid]?.title ?: "Hábitos"} :file "habits"
+      :done {wcfg.g[wid].done} :total {wcfg.g[wid].total} :pct {wcfg.g[wid].pct})
+    (label :class "pl-empty" :visible {wcfg.g[wid].total == 0} :halign "start"
+      :text "Sin hábitos: edita wcfg.g[wid].conf")
+    (for h in {wcfg.g[wid].items}
+      (eventbox :class "pl-row-box" :cursor "pointer"
+        :onclick "~/.config/eww/scripts/planner habit ${h.i} &"
+        (box :class "pl-row habit ${h.done ? 'done' : ''}" :orientation "h" :space-evenly false :spacing 10
+          (label :class "pl-check" :text {h.done ? "󰄵" : "󰄱"})
+          (label :class "pl-habit-icon" :text {h.icon})
+          (label :class "pl-text" :halign "start" :hexpand true :limit-width {wcfg.o[wid]?.chars ?: 22} :text {h.name})
+          (box :class "pl-week" :visible {(wcfg.o[wid]?.week ?: "yes") == "yes"} :orientation "h" :space-evenly false :spacing 3 :valign "center"
+            (for d in {h.week}
+              (box :class "pl-dot ${d.done ? 'on' : ''} ${d.today ? 'today' : ''}" :width 8 :height 8)))
+          (label :class "pl-streak ${h.streak > 0 ? 'hot' : ''}" :text "󰈸${h.streak}"))))))
+
+(defwindow rw-habits [wid]
+  :monitor 0
+  :geometry (geometry :x "460px" :y "110px" :width "0px" :height "0px" :anchor "top right")
+  :stacking "bg"
+  :exclusive false
+  :focusable false
+  :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-habits wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-habits-habits-card :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

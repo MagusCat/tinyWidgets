@@ -1,0 +1,53 @@
+{
+  "icon": "󰋩",
+  "name": "Foto",
+  "desc": "Imágenes al azar de una carpeta o archivo fijo",
+  "options": [
+    {
+      "key": "dir",
+      "label": "Carpeta o archivo",
+      "type": "file",
+      "default": "~/Imágenes/widget"
+    },
+    {
+      "key": "interval",
+      "label": "Cambiar cada (segundos)",
+      "type": "int",
+      "default": "30"
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "360"
+    },
+    {
+      "key": "height",
+      "label": "Alto (px)",
+      "type": "size",
+      "default": "360"
+    },
+    {
+      "key": "radius",
+      "label": "Redondeo de esquinas (px)",
+      "type": "int",
+      "default": "20"
+    }
+  ],
+  "id": "photo",
+  "version": 1,
+  "order": 9,
+  "base_id": "foto",
+  "size": [
+    360,
+    360
+  ],
+  "provider": "provider.py",
+  "interval": 30,
+  "requires": [],
+  "initial": {
+    "path": ""
+  },
+  "decision": "conservar",
+  "execution": "worker"
+}

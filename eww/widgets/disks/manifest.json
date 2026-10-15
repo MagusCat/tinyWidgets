@@ -1,0 +1,33 @@
+{
+  "icon": "󰋊",
+  "name": "Discos",
+  "desc": "Espacio usado en tus discos",
+  "options": [
+    {
+      "key": "mounts",
+      "label": "Montajes (ej. / /home)",
+      "type": "text",
+      "default": "/ /home"
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "420"
+    }
+  ],
+  "id": "disks",
+  "version": 1,
+  "order": 3,
+  "base_id": "discos",
+  "size": [
+    360,
+    146
+  ],
+  "provider": null,
+  "interval": 60,
+  "requires": [],
+  "initial": {},
+  "decision": "conservar",
+  "execution": "inline"
+}

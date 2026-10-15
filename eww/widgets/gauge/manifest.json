@@ -1,0 +1,92 @@
+{
+  "icon": "󰊚",
+  "name": "Medidor",
+  "desc": "Anillo o barra con el número que imprima un comando",
+  "group": "generic",
+  "options": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "Temperatura"
+    },
+    {
+      "key": "icon",
+      "label": "Icono (Nerd Font)",
+      "type": "text",
+      "default": "󰔏"
+    },
+    {
+      "key": "header",
+      "label": "Encabezado",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "command",
+      "label": "Comando (imprime un número)",
+      "type": "text",
+      "default": "awk '{printf \"%.0f\", $1/1000}' /sys/class/thermal/thermal_zone0/temp"
+    },
+    {
+      "key": "max",
+      "label": "Valor máximo",
+      "type": "int",
+      "default": "100"
+    },
+    {
+      "key": "unit",
+      "label": "Unidad",
+      "type": "text",
+      "default": "°C"
+    },
+    {
+      "key": "interval",
+      "label": "Repetir cada (segundos)",
+      "type": "int",
+      "default": "5"
+    },
+    {
+      "key": "style",
+      "label": "Estilo",
+      "type": "choice",
+      "default": "Anillo",
+      "choices": [
+        "Anillo",
+        "Barra"
+      ]
+    },
+    {
+      "key": "accent",
+      "label": "Color",
+      "type": "choice",
+      "default": "Primario",
+      "choices": [
+        "Primario",
+        "Secundario",
+        "Terciario",
+        "Rojo"
+      ]
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "260"
+    }
+  ],
+  "id": "gauge",
+  "version": 1,
+  "order": 16,
+  "base_id": "medidor",
+  "size": [
+    320,
+    220
+  ],
+  "provider": "provider.py",
+  "interval": 5,
+  "requires": [],
+  "initial": {},
+  "decision": "conservar",
+  "execution": "worker"
+}

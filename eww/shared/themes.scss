@@ -1,0 +1,70 @@
+// All roles follow Matugen's active palette, including light palettes.
+$secondary_container: mix($secondary, $surface, 22%) !default;
+$on_secondary_container: $on_surface !default;
+
+@mixin rw-surfaces {
+  .card, .clock-card, .photo-frame, .image-frame { @content; }
+}
+
+.rw-desktop.wroot.skin-monochrome {
+  @include rw-surfaces { border-radius: 12px; border: 1px solid $outline_variant; box-shadow: none; }
+  label { color: $on_surface; }
+  .gen-icon, .pl-icon, .sys-chip { color: $on_surface; background-color: rgba($on_surface, .08); }
+  progress highlight { background-color: $on_surface; }
+  .gen-sub, .pl-sub, .date { color: $on_surface_variant; }
+}
+
+.rw-desktop.wroot.skin-retro {
+  @include rw-surfaces { border-radius: 2px; border: 2px solid $primary; box-shadow: 3px 3px 0 rgba($outline, .55); }
+  label { font-family: "JetBrainsMono Nerd Font Mono", monospace; color: $on_surface; }
+  .gen-title, .pl-title, .clock, .gen-icon, .pl-icon { color: $primary; }
+  .gen-icon, .pl-icon, .sys-chip { background-color: $surface; border-radius: 0; }
+  progress trough { background-color: $surface; border: 1px solid $outline; border-radius: 0; }
+  progress highlight { background-color: $primary; border-radius: 0; }
+}
+
+.rw-desktop.wroot.skin-zsh {
+  @include rw-surfaces { border-radius: 9px; border: 1px solid rgba($primary,.55); border-left-width: 4px; box-shadow: none; }
+  label { font-family: "JetBrainsMono Nerd Font Mono", monospace; color: $on_surface; }
+  .gen-head, .pl-head, .music-head { border-bottom: 1px solid rgba($outline_variant,.65); padding-bottom: 8px; }
+  .gen-title, .pl-title, .greeting { color: $primary; font-weight: 700; }
+  .gen-icon, .pl-icon { background-color: $primary_container; color: $on_primary_container; border-radius: 4px; }
+  .sys-chip { color: $secondary; background-color: rgba($secondary,.1); border-radius: 3px; }
+  progress trough { background-color: rgba($outline_variant,.4); border-radius: 2px; }
+  progress highlight { background-color: $tertiary; border-radius: 2px; }
+}
+
+.rw-desktop.wroot.skin-gnome {
+  @include rw-surfaces { border-radius: 16px; border: 1px solid rgba($outline_variant,.65); box-shadow: 0 2px 5px rgba($shadow,.18); }
+  label { font-family: "Adwaita Sans", "Cantarell", sans-serif; color: $on_surface; }
+  .gen-title, .pl-title { font-weight: 700; }
+  .gen-icon, .pl-icon { background-color: $primary_container; color: $on_primary_container; border-radius: 10px; }
+  .sys-chip { background-color: rgba($on_surface,.07); color: $on_surface_variant; }
+  progress trough { background-color: rgba($outline_variant,.5); }
+  progress highlight { background-color: $primary; }
+}
+
+.rw-desktop.wroot.skin-terminal {
+  @include rw-surfaces { border-radius: 0; border: 1px solid $outline; box-shadow: none; padding: 12px 14px; }
+  label { font-family: "JetBrainsMono Nerd Font Mono", monospace; color: $on_surface; }
+  .gen-head, .pl-head, .music-head { border-bottom: 1px solid $outline_variant; padding-bottom: 7px; }
+  .gen-title, .pl-title, .greeting { color: $secondary; font-weight: 700; }
+  .gen-icon, .pl-icon, .sys-chip { color: $primary; background-color: transparent; border-radius: 0; }
+  progress trough { background-color: rgba($outline_variant,.4); border-radius: 0; min-height: 4px; }
+  progress highlight { background-color: $primary; border-radius: 0; }
+}
+
+// Backgrounds apply after skins, independently of per-widget accent colors.
+.rw-desktop.wroot.bg-surface { @include rw-surfaces { background-color: rgba($surface_container,.88); } }
+.rw-desktop.wroot.bg-deep { @include rw-surfaces { background-color: rgba($surface,.94); } }
+.rw-desktop.wroot.bg-raised { @include rw-surfaces { background-color: rgba($surface_container_highest,.9); } }
+.rw-desktop.wroot.bg-primary { @include rw-surfaces { background-color: rgba(mix($primary_container,$surface,50%),.94); } }
+.rw-desktop.wroot.bg-secondary { @include rw-surfaces { background-color: rgba(mix($secondary_container,$surface,55%),.94); } }
+.rw-desktop.wroot.bg-tertiary { @include rw-surfaces { background-color: rgba(mix($tertiary_container,$surface,50%),.94); } }
+.rw-desktop.wroot.bg-blend { @include rw-surfaces { background-color: rgba(mix(mix($primary_container,$tertiary_container,50%),$surface,55%),.94); } }
+.rw-desktop.wroot.bg-transparent { @include rw-surfaces { background-color: transparent; } }
+
+
+.rw-desktop.wroot.skin-clean.bg-surface {
+  @include rw-surfaces { background-color: transparent; }
+}

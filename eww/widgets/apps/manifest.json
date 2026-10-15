@@ -1,0 +1,81 @@
+{
+  "icon": "󰀻",
+  "name": "Acceso a Apps",
+  "desc": "Lanzador de aplicaciones favoritas con iconos y atajos",
+  "group": "generic",
+  "options": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "Acceso Rápido"
+    },
+    {
+      "key": "icon",
+      "label": "Icono (Nerd Font)",
+      "type": "text",
+      "default": "󰀻"
+    },
+    {
+      "key": "header",
+      "label": "Encabezado (icono + título)",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "style",
+      "label": "Estilo",
+      "type": "choice",
+      "default": "Dock horizontal",
+      "choices": [
+        "Dock horizontal",
+        "Cuadrícula 2x4",
+        "Píldoras con nombres"
+      ]
+    },
+    {
+      "key": "apps",
+      "label": "Apps a mostrar",
+      "type": "text",
+      "default": "term,web,files,discord,code,music,editor"
+    },
+    {
+      "key": "labels",
+      "label": "Mostrar nombres",
+      "type": "bool",
+      "default": "no"
+    },
+    {
+      "key": "accent",
+      "label": "Color",
+      "type": "choice",
+      "default": "Primario",
+      "choices": [
+        "Primario",
+        "Secundario",
+        "Terciario",
+        "Rojo"
+      ]
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "340"
+    }
+  ],
+  "id": "apps",
+  "version": 1,
+  "order": 18,
+  "base_id": "apps",
+  "size": [
+    340,
+    110
+  ],
+  "provider": "provider.py",
+  "interval": 60,
+  "requires": [],
+  "initial": {},
+  "decision": "conservar",
+  "execution": "inline"
+}

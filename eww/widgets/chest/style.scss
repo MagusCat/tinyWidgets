@@ -1,0 +1,108 @@
+.rw-desktop.rw-chest .chest-sprite {
+  padding: 2px;
+}
+
+.rw-desktop.rw-chest .mc-inventory {
+  background-color: rgba($surface_container_high, 0.94);
+  border: 3px solid $shadow;
+  border-top-color: rgba($on_surface, 0.55);
+  border-left-color: rgba($on_surface, 0.55);
+  border-radius: 4px;
+  padding: 8px 10px 8px 10px;
+  margin-bottom: 8px;
+}
+
+.rw-desktop.rw-chest .mc-head {
+  margin-bottom: 6px;
+}
+
+.rw-desktop.rw-chest .mc-title {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-size: 14px;
+  font-weight: 700;
+  color: $primary;
+}
+
+.rw-desktop.rw-chest .mc-close {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-size: 14px;
+  color: $on_surface_variant;
+  padding: 0 4px;
+
+  &:hover { color: $error; }
+}
+
+.rw-desktop.rw-chest .mc-slot {
+  min-width: 40px;
+  min-height: 40px;
+  margin: 1px;
+  background-color: rgba($surface_container, 0.95);
+  border: 2px solid rgba($on_surface, 0.35);
+  border-top-color: $shadow;
+  border-left-color: $shadow;
+}
+
+.rw-desktop.rw-chest .mc-icon {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-size: 20px;
+  color: $on_surface;
+}
+
+.rw-desktop.rw-chest .mc-slot-box:hover .mc-slot.used {
+  background-color: rgba($primary_container, 0.95);
+}
+
+.rw-desktop.rw-chest .mc-slot-box:hover .mc-slot.used .mc-icon {
+  color: $on_primary_container;
+}
+
+.rw-desktop.rw-chest .critters-bar {
+  padding: 4px 6px;
+}
+
+.rw-desktop.rw-chest .chest-btn {
+  background-color: rgba($surface_container, 0.75);
+  border: 1px solid rgba($outline_variant, 0.4);
+  border-radius: 12px;
+  padding: 6px 12px;
+  transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+
+  &:hover {
+    background-color: $primary;
+    border-color: $primary;
+    box-shadow: 0 0 14px rgba($primary, 0.5);
+
+    .chest-icon {
+      color: $on_primary;
+    }
+  }
+}
+
+.rw-desktop.rw-chest .chest-icon {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-size: 20px;
+  color: $primary;
+  transition: color 180ms ease;
+}
+
+.rw-desktop.rw-chest .mc-hover {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-size: 13px;
+  color: $on_surface_variant;
+  margin-top: 6px;
+  min-height: 18px;
+}
+
+.rw-desktop.rw-chest .critter-sprite {
+  padding: 2px 0;
+}
+
+.rw-desktop.rw-chest .critter-says {
+  background-color: rgba($surface_container_high, 0.94);
+  color: $on_surface;
+  border: 2px solid $shadow;
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-bottom: 4px;
+  font-size: 11px;
+}

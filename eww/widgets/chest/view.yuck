@@ -1,0 +1,51 @@
+(defwidget rw-chest-chest-slot [slot wid]
+  (eventbox :class "mc-slot-box" :cursor {slot.used ? "pointer" : "default"}
+    :tooltip {slot.label}
+    :onhover "@CTL@ action ${wid} hover ${slot.i}"
+    :onclick {slot.used ? "@CTL@ action ${wid} launch ${slot.i} &" : "true"}
+    (box :class "mc-slot ${slot.used ? 'used' : 'empty'}" :width 40 :height 40
+      (label :class "mc-icon" :text {slot.icon}))))
+
+(defwidget rw-chest-critter [wid name width height frame says]
+  (box :class "critter" :orientation "v" :space-evenly false :valign "end" :width width
+    (revealer :reveal {says != ""} :transition "slideup" :duration "150ms"
+      (label :class "critter-says" :halign "center" :text {says != "" ? says : " "}))
+    (eventbox :class "critter-sprite" :cursor "pointer"
+      :onclick "@CTL@ action ${wid} critter ${name} &"
+      (image :path "@ASSETS@/${name}-${frame}.png"
+        :image-width width :image-height height))))
+
+(defwidget rw-chest-chest-root [wid]
+  (box :class "chest" :orientation "v" :space-evenly false :halign "start" :valign "end"
+    (revealer :reveal {wcfg.g[wid].open} :transition "slideup" :duration "250ms"
+      (eventbox :onhoverlost "@CTL@ action ${wid} hover -1"
+        (box :class "mc-inventory" :orientation "v" :space-evenly false
+          (box :class "mc-head" :orientation "h" :space-evenly false
+            (label :class "mc-title" :halign "start" :hexpand true :text "Chest")
+            (button :class "mc-close" :onclick "@CTL@ action ${wid} close" "󰅖"))
+          (box :class "mc-grid" :orientation "v" :space-evenly false
+            (for row in {wcfg.g[wid].rows}
+              (box :orientation "h" :space-evenly false
+                (for slot in row
+                  (rw-chest-chest-slot :slot slot :wid wid)))))
+          (label :class "mc-hover" :halign "start" :limit-width 44
+            :text {wcfg.g[wid].hover >= 0 ? (wcfg.g[wid].labels[wcfg.g[wid].hover] ?: "") : "${wcfg.g[wid].count} items"}))))
+    (box :class "chest-floor" :orientation "h" :space-evenly false :spacing 6 :halign "start" :valign "end"
+      (eventbox :class "chest-sprite" :cursor "pointer" :halign "start" :valign "end"
+        :onclick "@CTL@ action ${wid} toggle"
+        (image :path {wcfg.g[wid].open ? "@ASSETS@/chest-open.png" : "@ASSETS@/chest-closed.png"}
+          :image-width 64 :image-height 64))
+      (rw-chest-critter :wid wid :name "raccoon" :width 152 :height 64
+        :frame {wcfg.g[wid].raccoon_says != "" ? "peek" : wcfg.g[wid].raccoon} :says {wcfg.g[wid].raccoon_says})
+      (rw-chest-critter :wid wid :name "rat" :width 72 :height 32
+        :frame {wcfg.g[wid].rat_says != "" ? "squeak" : wcfg.g[wid].rat} :says {wcfg.g[wid].rat_says}))))
+
+(defwindow rw-chest [wid]
+  :monitor 0
+  :geometry (geometry :x "520px" :y "16px" :width "0px" :height "0px" :anchor "bottom left")
+  :stacking "bg"
+  :exclusive false
+  :focusable false
+  :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-chest wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-chest-chest-root :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

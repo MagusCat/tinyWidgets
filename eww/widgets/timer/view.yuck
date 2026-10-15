@@ -1,0 +1,19 @@
+(defwidget rw-timer-timer-card [wid]
+  (box :class "card gen timer-card ${(wcfg.o[wid]?.card_class ?: '')} ${(wcfg.o[wid]?.pad_class ?: '')} accent-${wcfg.o[wid]?.accent_class ?: 'primary'}"
+    :orientation "v" :space-evenly false :spacing 10
+    :style "min-width: ${wcfg.o[wid]?.inner ?: 280}px;"
+    (rw-shared-gen-head :wid wid)
+    (box :orientation "h" :space-evenly false :valign "center"
+      (label :class "timer-clock" :halign "start" :text {wcfg.g[wid]?.time ?: "25:00"})
+      (label :class "timer-tag" :halign "end" :hexpand true :text {wcfg.g[wid]?.state ?: "Enfoque"}))
+    (progress :class "gen-bar" :orientation "h" :value {wcfg.g[wid]?.pct ?: 0})
+    (box :orientation "h" :space-evenly true :spacing 8
+      (button :class "timer-btn ${(wcfg.g[wid]?.running ?: false) ? 'active' : ''}" :onclick "@CTL@ timer-toggle ${wid} &"
+        {(wcfg.g[wid]?.running ?: false) ? "󰏤 Pausar" : "󰐊 Iniciar"})
+      (button :class "timer-btn" :onclick "@CTL@ timer-reset ${wid} &" "󰑐 Reiniciar"))))
+
+(defwindow rw-timer [wid]
+  :monitor 0 :geometry (geometry :x "64px" :y "110px" :width "0px" :height "0px" :anchor "top left")
+  :stacking "bg" :exclusive false :focusable false :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-timer wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-timer-timer-card :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

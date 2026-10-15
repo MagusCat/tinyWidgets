@@ -1,0 +1,22 @@
+(defwidget rw-system-stat [icon value name]
+  (box :class "stat" :orientation "v" :space-evenly false :spacing 6
+    (circular-progress :class "ring ${name}" :value {value} :thickness 8 :start-at 75 :width 88 :height 88
+      (label :class "stat-icon" :text icon))
+    (label :class "stat-value" :text "${round(value, 0)}%")))
+
+(defwidget rw-system-system-card [wid]
+  (box :class "card system" :orientation "h" :space-evenly true
+    :style "min-width: ${wcfg.o[wid]?.inner ?: 382}px;"
+    (box :visible {(wcfg.o[wid]?.cpu ?: "yes") == "yes"}
+      (rw-system-stat :icon "" :name "cpu" :value {EWW_CPU.avg ?: 0}))
+    (box :visible {(wcfg.o[wid]?.ram ?: "yes") == "yes"}
+      (rw-system-stat :icon "󰍛" :name "ram" :value {EWW_RAM.used_mem_perc ?: 0}))
+    (box :visible {(wcfg.o[wid]?.bat ?: "yes") == "yes"}
+      (rw-system-stat :icon "󰁹" :name "bat" :value {EWW_BATTERY?.total_avg ?: 0}))))
+
+(defwindow rw-system [wid]
+  :monitor 0
+  :geometry (geometry :x "64px" :y "110px" :width "0px" :height "0px" :anchor "top left")
+  :stacking "bg" :exclusive false :focusable false :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-system wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-system-system-card :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

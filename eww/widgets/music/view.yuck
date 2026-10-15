@@ -1,0 +1,23 @@
+(defwidget rw-music-music-card [wid]
+  (revealer :reveal {wcfg.g[wid].title != "" || (wcfg.o[wid]?.always ?: "no") == "yes"}
+    :transition "slidedown" :duration "300ms"
+    (box :class "card music" :orientation "v" :space-evenly false
+      :style "min-width: ${wcfg.o[wid]?.inner ?: 382}px;"
+      (box :class "music-head" :orientation "h" :space-evenly false :spacing 12
+        (label :class "music-icon" :text "󰎈")
+        (box :orientation "v" :space-evenly false :hexpand true
+          (label :class "music-title" :halign "start" :limit-width 30
+            :text {wcfg.g[wid].title != "" ? wcfg.g[wid].title : "Nada sonando"})
+          (label :class "music-artist" :halign "start" :limit-width 34 :text {wcfg.g[wid].artist})))
+      (box :class "music-controls" :orientation "h" :space-evenly true :halign "center" :spacing 18
+        (button :class "ctl" :onclick "@CTL@ action ${wid} music previous" "󰒮")
+        (button :class "ctl play" :onclick "@CTL@ action ${wid} music play-pause"
+          {wcfg.g[wid].status == "Playing" ? "󰏤" : "󰐊"})
+        (button :class "ctl" :onclick "@CTL@ action ${wid} music next" "󰒭")))))
+
+(defwindow rw-music [wid]
+  :monitor 0
+  :geometry (geometry :x "64px" :y "110px" :width "0px" :height "0px" :anchor "top left")
+  :stacking "bg" :exclusive false :focusable false :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-music wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-music-music-card :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

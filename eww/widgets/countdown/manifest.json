@@ -1,0 +1,71 @@
+{
+  "icon": "󰔟",
+  "name": "Cuenta regresiva",
+  "desc": "Días, horas y minutos hasta una fecha",
+  "group": "generic",
+  "options": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "Año nuevo"
+    },
+    {
+      "key": "icon",
+      "label": "Icono (Nerd Font)",
+      "type": "text",
+      "default": "󰔟"
+    },
+    {
+      "key": "header",
+      "label": "Encabezado",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "date",
+      "label": "Fecha (AAAA-MM-DD HH:MM)",
+      "type": "text",
+      "default": "2027-01-01 00:00"
+    },
+    {
+      "key": "done",
+      "label": "Texto al llegar",
+      "type": "text",
+      "default": "¡Llegó el día!"
+    },
+    {
+      "key": "accent",
+      "label": "Color",
+      "type": "choice",
+      "default": "Primario",
+      "choices": [
+        "Primario",
+        "Secundario",
+        "Terciario",
+        "Rojo"
+      ]
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "300"
+    }
+  ],
+  "id": "countdown",
+  "version": 1,
+  "order": 15,
+  "base_id": "cuenta",
+  "size": [
+    320,
+    220
+  ],
+  "provider": "provider.py",
+  "interval": 60,
+  "requires": [],
+  "initial": {},
+  "enabled": false,
+  "decision": "retirar",
+  "execution": "inline"
+}

@@ -1,0 +1,12 @@
+(defwidget rw-countdown-countdown-card [wid]
+  (box :class "card gen accent-${wcfg.o[wid]?.accent_class ?: 'primary'}" :orientation "v"
+    :space-evenly false :spacing 6 :style "min-width: ${wcfg.o[wid]?.inner ?: 262}px;"
+    (rw-shared-gen-head :wid wid)
+    (label :class "gen-big" :halign "start" :text {wcfg.g[wid]?.text ?: "…"})
+    (label :class "gen-sub" :halign "start" :text {wcfg.g[wid]?.sub ?: ""})))
+
+(defwindow rw-countdown [wid]
+  :monitor 0 :geometry (geometry :x "64px" :y "110px" :width "0px" :height "0px" :anchor "top left")
+  :stacking "bg" :exclusive false :focusable false :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-countdown wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-countdown-countdown-card :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

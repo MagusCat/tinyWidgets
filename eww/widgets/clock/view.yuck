@@ -1,0 +1,18 @@
+(defwidget rw-clock-clock-card [wid]
+  (box :class "clock-card" :orientation "v" :space-evenly false :halign "start"
+    :style "min-width: ${wcfg.o[wid]?.inner ?: 382}px;"
+    (label :class "clock-label" :halign "start" :visible {(wcfg.o[wid]?.label ?: "") != ""}
+      :text {wcfg.o[wid]?.label ?: ""})
+    (label :class "clock" :halign "start" :style "font-size: ${round((wcfg.o[wid]?.width ?: 420) / 4.5, 0)}px;"
+      :text {wcfg.t[wid]?.time ?: "--:--"})
+    (label :class "date" :halign "start" :visible {(wcfg.t[wid]?.date ?: "") != ""}
+      :text {wcfg.t[wid]?.date ?: ""})
+    (label :class "greeting" :halign "start" :visible {(wcfg.o[wid]?.greeting ?: "yes") == "yes"}
+      :text {wcfg.t[wid]?.greeting ?: ""})))
+
+(defwindow rw-clock [wid]
+  :monitor 0
+  :geometry (geometry :x "64px" :y "110px" :width "0px" :height "0px" :anchor "top left")
+  :stacking "bg" :exclusive false :focusable false :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-clock wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-clock-clock-card :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

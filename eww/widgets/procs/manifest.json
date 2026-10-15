@@ -1,0 +1,110 @@
+{
+  "icon": "󰓅",
+  "name": "Procesos",
+  "desc": "Programas en ejecución: pausar, terminar o matar",
+  "group": "generic",
+  "options": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "Procesos"
+    },
+    {
+      "key": "icon",
+      "label": "Icono (Nerd Font)",
+      "type": "text",
+      "default": "󰓅"
+    },
+    {
+      "key": "header",
+      "label": "Encabezado",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "which",
+      "label": "Mostrar",
+      "type": "choice",
+      "default": "En segundo plano (sin ventana)",
+      "choices": [
+        "En segundo plano (sin ventana)",
+        "Con ventana",
+        "Todos mis procesos"
+      ]
+    },
+    {
+      "key": "group",
+      "label": "Agrupar por programa",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "sort",
+      "label": "Ordenar por",
+      "type": "choice",
+      "default": "CPU",
+      "choices": [
+        "CPU",
+        "Memoria",
+        "Nombre"
+      ]
+    },
+    {
+      "key": "count",
+      "label": "Cuántos mostrar",
+      "type": "int",
+      "default": "8"
+    },
+    {
+      "key": "filter",
+      "label": "Filtrar por nombre",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "hide",
+      "label": "Ocultar (nombres)",
+      "type": "text",
+      "default": "wayfire waybar eww Xwayland pipewire pipewire-pulse wireplumber systemd dbus-broker dbus-broker-launch dbus-daemon swayidle swaync swayosd-server polkit-kde-authentication-agent-1 xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-wlr xdg-document-portal xdg-permission-store gvfsd at-spi-bus-launcher at-spi2-registryd awww-daemon kanshi sh bash zsh cliphist wl-paste gnome-keyring-daemon"
+    },
+    {
+      "key": "interval",
+      "label": "Actualizar cada (segundos)",
+      "type": "int",
+      "default": "3"
+    },
+    {
+      "key": "accent",
+      "label": "Color",
+      "type": "choice",
+      "default": "Primario",
+      "choices": [
+        "Primario",
+        "Secundario",
+        "Terciario",
+        "Rojo"
+      ]
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "420"
+    }
+  ],
+  "id": "procs",
+  "version": 1,
+  "order": 17,
+  "base_id": "procesos",
+  "size": [
+    320,
+    220
+  ],
+  "provider": "provider.py",
+  "interval": 3,
+  "requires": [],
+  "initial": {},
+  "decision": "mejorar",
+  "execution": "worker"
+}

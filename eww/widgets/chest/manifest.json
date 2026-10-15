@@ -1,0 +1,31 @@
+{
+  "icon": "󰜦",
+  "name": "Cofre",
+  "desc": "Lanzador de apps estilo Minecraft (chest.conf)",
+  "single": true,
+  "options": [],
+  "id": "chest",
+  "version": 1,
+  "order": 8,
+  "base_id": "cofre",
+  "size": [
+    440,
+    64
+  ],
+  "provider": "provider.py",
+  "interval": 0.6,
+  "requires": [],
+  "initial": {
+    "rows": [],
+    "labels": [],
+    "count": 0,
+    "open": false,
+    "hover": -1,
+    "raccoon": "0",
+    "rat": "0",
+    "raccoon_says": "",
+    "rat_says": ""
+  },
+  "decision": "conservar",
+  "execution": "worker"
+}

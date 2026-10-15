@@ -1,0 +1,1024 @@
+// Window surface belongs only to this Eww profile.
+window { background: transparent; }
+
+.rw-desktop, .rw-desktop * {
+  all: unset;
+  font-family: "Inter", "JetBrainsMono Nerd Font Propo", sans-serif;
+  transition: all 300ms ease-out;
+}
+
+.rw-desktop .desktop {
+  padding: 4px;
+}
+
+.rw-desktop .card {
+  background-color: rgba($surface_container, 0.62);
+  border: 1px solid rgba($outline_variant, 0.45);
+  border-radius: 20px;
+  padding: 16px 18px;
+}
+
+.rw-desktop box.card.kitty .kitty-art label,
+.rw-desktop .card.kitty .kitty-art label,
+.rw-desktop .kitty-art label,
+.rw-desktop .kitty-art {
+  font-family: "JetBrainsMono Nerd Font Mono", monospace;
+  font-size: 15px;
+  color: $tertiary;
+  padding: 2px 4px;
+}
+
+.rw-desktop .photos {
+  background: transparent;
+}
+
+.rw-desktop tooltip {
+  background-color: $surface_container_highest;
+  border: 1px solid $outline_variant;
+  border-radius: 6px;
+  padding: 4px 8px;
+  color: $on_surface;
+}
+
+.rw-desktop .planner { padding: 14px 16px; }
+
+.rw-desktop .pl-icon {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-size: 20px;
+  color: $on_primary_container;
+  background-color: rgba($primary_container, 0.85);
+  border-radius: 12px;
+  min-width: 38px;
+  min-height: 38px;
+}
+
+.rw-desktop .tasks .pl-icon {
+  color: $on_surface;
+  background-color: rgba($tertiary_container, 0.9);
+}
+
+.rw-desktop .pl-title { font-size: 15px; font-weight: 600; color: $on_surface; }
+
+.rw-desktop .pl-sub { font-size: 12px; color: $on_surface_variant; }
+
+.rw-desktop .pl-ring { color: $primary; background-color: rgba($outline_variant, 0.5); }
+
+.rw-desktop .tasks .pl-ring { color: $tertiary; }
+
+.rw-desktop .pl-pct { font-size: 10px; font-weight: 600; color: $on_surface_variant; }
+
+.rw-desktop .pl-edit {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-size: 15px;
+  color: $outline;
+  padding: 4px 8px;
+  border-radius: 10px;
+}
+
+.rw-desktop .pl-edit:hover { color: $primary; background-color: rgba($primary, 0.12); }
+
+.rw-desktop .pl-empty { font-size: 13px; color: $outline; }
+
+.rw-desktop .pl-row {
+  padding: 7px 10px;
+  border-radius: 12px;
+  background-color: rgba($surface_container_high, 0.45);
+}
+
+.rw-desktop .pl-row-box:hover .pl-row { background-color: rgba($surface_container_highest, 0.75); }
+
+.rw-desktop .pl-check {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-size: 17px;
+  color: $outline;
+}
+
+.rw-desktop .pl-habit-icon {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-size: 15px;
+  color: $secondary;
+  min-width: 18px;
+}
+
+.rw-desktop .pl-text { font-size: 13px; color: $on_surface; }
+
+.rw-desktop .pl-row.done .pl-check { color: $primary; }
+
+.rw-desktop .pl-row.task.done .pl-check { color: $tertiary; }
+
+.rw-desktop .pl-row.done .pl-text { color: $outline; text-decoration: line-through; }
+
+.rw-desktop .pl-dot {
+  border-radius: 99px;
+  background-color: rgba($outline_variant, 0.7);
+}
+
+.rw-desktop .pl-dot.on { background-color: $primary; }
+
+.rw-desktop .pl-dot.today { border: 1px solid $on_surface_variant; }
+
+.rw-desktop .pl-streak { font-size: 11px; color: $outline; min-width: 30px; }
+
+.rw-desktop .pl-streak.hot { color: $tertiary; }
+
+.rw-desktop .pl-group { margin: 4px 4px 0 4px; }
+
+.rw-desktop .pl-group-name { font-size: 11px; font-weight: 600; color: $on_surface_variant; }
+
+.rw-desktop .pl-group-count { font-size: 11px; color: $outline; }
+
+.rw-desktop .gen { padding: 16px 18px; }
+
+.rw-desktop .gen-icon,
+.rw-desktop .gen-button-icon {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-size: 18px;
+  border-radius: 12px;
+  min-width: 36px;
+  min-height: 36px;
+}
+
+.rw-desktop .gen-button-icon { font-size: 22px; min-width: 46px; min-height: 46px; border-radius: 14px; }
+
+.rw-desktop .gen-title { font-size: 15px; font-weight: 600; color: $on_surface; }
+
+.rw-desktop .gen-sub { font-size: 12px; color: $on_surface_variant; }
+
+.rw-desktop .gen-note { color: $on_surface; }
+
+.rw-desktop .gen-note.font-small { font-size: 12px; }
+
+.rw-desktop .gen-note.font-medium { font-size: 15px; }
+
+.rw-desktop .gen-note.font-large { font-size: 21px; font-weight: 300; }
+
+.rw-desktop .gen-output { font-size: 13px; color: $on_surface_variant; }
+
+.rw-desktop box.card.command-card label.gen-output,
+.rw-desktop .card.command-card label.gen-output,
+.rw-desktop .command-card label.gen-output,
+.rw-desktop .command-card .gen-output,
+.rw-desktop .command-card .gen-output.mono,
+.rw-desktop .command-card .mono,
+.rw-desktop .command-card label.mono,
+.rw-desktop label.gen-output.mono,
+.rw-desktop .gen-output.mono {
+  font-family: "JetBrainsMono Nerd Font Mono", monospace;
+  font-size: 12px;
+}
+
+.rw-desktop .gen-big { font-size: 30px; font-weight: 300; color: $on_surface; }
+
+.rw-desktop .gen-ring-value { font-size: 18px; font-weight: 600; color: $on_surface; }
+
+.rw-desktop .gen-ring { background-color: rgba($outline_variant, 0.5); }
+
+.rw-desktop .gen-bar trough { min-height: 8px; border-radius: 99px; background-color: rgba($outline_variant, 0.5); }
+
+.rw-desktop .gen-bar progress { min-height: 8px; border-radius: 99px; }
+
+.rw-desktop .gen-button-box:hover .gen-button { background-color: rgba($surface_container_highest, 0.8); }
+
+@mixin accent($c, $on) {
+  .gen-icon, .gen-button-icon { color: $on; background-color: rgba($c, 0.9); }
+  .gen-ring { color: $c; }
+  .gen-bar progress { background-color: $c; }
+}
+
+.rw-desktop .accent-primary { @include accent($primary, $on_primary); }
+
+.rw-desktop .accent-secondary { @include accent($secondary, $surface); }
+
+.rw-desktop .accent-tertiary { @include accent($tertiary, $surface); }
+
+.rw-desktop .accent-error { @include accent($error, $surface); }
+
+.rw-desktop .accent-normal { @include accent($primary, $on_primary); }
+
+.rw-desktop .accent-warn { @include accent($tertiary, $surface); }
+
+.rw-desktop .accent-crit { @include accent($error, $surface); }
+
+.rw-desktop .accent-cyan { @include accent(#22d3ee, #083344); }
+
+.rw-desktop .accent-green { @include accent(#4ade80, #052e16); }
+
+.rw-desktop .accent-purple { @include accent(#a855f7, #3b0764); }
+
+.rw-desktop .accent-amber { @include accent(#fbbf24, #451a03); }
+
+.rw-desktop .accent-rose { @include accent(#fb7185, #4c0519); }
+
+.rw-desktop .accent-custom { @include accent(#c084fc, #3b0764); }
+
+.rw-desktop .card.command-card.frame-none {
+  background: none;
+  background-color: transparent;
+  border-width: 0px;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.rw-desktop .card.command-card.frame-terminal {
+  background-color: rgba(12, 14, 20, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+}
+
+.rw-desktop .card.command-card.pad-none {
+  padding: 0px;
+}
+
+.rw-desktop .card.command-card.pad-compact {
+  padding: 8px 12px;
+}
+
+.rw-desktop .card,
+.rw-desktop .gen,
+.rw-desktop .clock-card,
+.rw-desktop .clock,
+.rw-desktop .photo-frame,
+.rw-desktop .image-frame,
+.rw-desktop .planner,
+.rw-desktop .kitty,
+.rw-desktop .system,
+.rw-desktop .disks,
+.rw-desktop .music {
+  transition-property: background-color, color, border-color, opacity, box-shadow;
+}
+
+.rw-desktop .proc-row { padding: 4px 6px 4px 10px; border-radius: 12px; background-color: rgba($surface_container_high, 0.45); }
+
+.rw-desktop .proc-row.paused { opacity: 0.55; }
+
+.rw-desktop .proc-dot { font-family: "JetBrainsMono Nerd Font Propo"; font-size: 13px; color: $outline; }
+
+.rw-desktop .proc-name { font-size: 13px; color: $on_surface; }
+
+.rw-desktop .proc-num { font-family: "JetBrainsMono Nerd Font Propo"; font-size: 11px; color: $on_surface_variant; min-width: 34px; }
+
+.rw-desktop .proc-num.mem { min-width: 46px; }
+
+.rw-desktop .proc-btn {
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-size: 14px;
+  color: $on_surface_variant;
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+
+.rw-desktop .proc-btn:hover { color: $on_surface; background-color: rgba($primary, 0.18); }
+
+.rw-desktop .proc-btn.kill:hover { color: $error; background-color: rgba($error, 0.18); }
+
+.rw-desktop .apps-card {
+  .apps-container {
+    padding: 4px 0;
+    &.dock {
+      margin: 2px 0;
+    }
+    &.grid {
+      margin: 4px 0;
+    }
+  }
+  .app-btn {
+    padding: 8px 10px;
+    border-radius: 14px;
+    background-color: rgba($surface_container_high, 0.35);
+    border: 1px solid rgba($outline_variant, 0.20);
+    transition: transform 180ms cubic-bezier(0.2, 0, 0, 1), background-color 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+
+    &:hover {
+      background-color: rgba($surface_container_high, 0.85);
+      border-color: rgba($primary, 0.50);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25), 0 0 12px rgba($primary, 0.35);
+    }
+
+    .app-icon {
+      font-size: 24px;
+      color: $primary;
+      transition: color 150ms ease;
+    }
+    .app-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: $on_surface;
+      margin-top: 2px;
+    }
+
+    &.pills {
+      padding: 6px 12px;
+      .app-icon { font-size: 18px; margin-right: 6px; }
+      .app-name { font-size: 12px; }
+    }
+  }
+}
+
+.rw-desktop .net-card {
+  .net-speed-box {
+    padding: 8px 12px;
+    border-radius: 12px;
+    background-color: rgba($surface_container_high, 0.40);
+    border: 1px solid rgba($outline_variant, 0.25);
+  }
+  .net-icon {
+    font-size: 18px;
+    margin-right: 6px;
+    &.down { color: $primary; }
+    &.up { color: $tertiary; }
+  }
+  .net-speed-val {
+    font-family: "JetBrainsMono Nerd Font Mono", monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: $on_surface;
+  }
+  .net-speed-label {
+    font-size: 11px;
+    color: $on_surface_variant;
+  }
+  .net-ip-badge {
+    font-family: "JetBrainsMono Nerd Font Mono", monospace;
+    font-size: 11px;
+    color: $on_surface_variant;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background-color: rgba($surface_container_high, 0.45);
+  }
+}
+
+.rw-desktop .weather-card {
+  .weather-temp {
+    font-size: 34px;
+    font-weight: 300;
+    letter-spacing: -1px;
+    color: $on_surface;
+  }
+  .weather-icon-big {
+    font-size: 34px;
+    color: $primary;
+    margin-right: 10px;
+  }
+  .weather-desc {
+    font-size: 14px;
+    font-weight: 600;
+    color: $on_surface;
+  }
+  .weather-city {
+    font-size: 12px;
+    color: $on_surface_variant;
+  }
+  .weather-chip {
+    padding: 3px 8px;
+    border-radius: 8px;
+    background-color: rgba($surface_container_high, 0.45);
+    font-size: 11px;
+    color: $on_surface_variant;
+  }
+}
+
+.rw-desktop .timer-card {
+  .timer-clock {
+    font-family: "JetBrainsMono Nerd Font Mono", monospace;
+    font-size: 38px;
+    font-weight: 200;
+    color: $on_surface;
+    letter-spacing: -1px;
+  }
+  .timer-tag {
+    font-size: 12px;
+    font-weight: 600;
+    color: $primary;
+    padding: 2px 8px;
+    border-radius: 99px;
+    background-color: rgba($primary, 0.15);
+  }
+  .timer-btn {
+    padding: 6px 14px;
+    border-radius: 10px;
+    background-color: rgba($surface_container_high, 0.60);
+    border: 1px solid rgba($outline_variant, 0.30);
+    font-size: 13px;
+    font-weight: 600;
+    color: $on_surface;
+    transition: background-color 150ms ease, border-color 150ms ease;
+    &:hover {
+      background-color: $primary;
+      color: $on_primary;
+      border-color: $primary;
+    }
+    &.active {
+      background-color: $primary;
+      color: $on_primary;
+    }
+  }
+}
+
+.rw-desktop .pixel-card {
+  .pixel-canvas-box {
+    padding: 6px 8px;
+    border-radius: 12px;
+    background-color: rgba($surface, 0.55);
+    border: 1px solid rgba($outline_variant, 0.15);
+  }
+
+  box.pixel-canvas-box label.pixel-art,
+  label.pixel-art {
+    font-family: "JetBrainsMono Nerd Font Mono", monospace;
+    letter-spacing: 0px;
+
+    &.scale-small {
+      font-size: 11px;
+    }
+    &.scale-medium {
+      font-size: 15px;
+    }
+    &.scale-large {
+      font-size: 20px;
+    }
+  }
+
+  .pixel-caption {
+    font-size: 11px;
+    font-weight: 600;
+    color: $on_surface_variant;
+    margin-top: 4px;
+  }
+}
+
+@keyframes gh-pulse {
+  0%   { background-color: rgba($outline_variant, 0.25); }
+  50%  { background-color: rgba($primary, 0.45); }
+  100% { background-color: rgba($outline_variant, 0.25); }
+}
+
+@keyframes gh-blink {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.35; }
+  100% { opacity: 1; }
+}
+
+@keyframes fx-glow-border {
+  0%   { border-color: rgba($primary, 0.30); }
+  50%  { border-color: rgba($primary, 0.95); }
+  100% { border-color: rgba($primary, 0.30); }
+}
+
+@keyframes fx-glow-accent {
+  0%   { color: rgba($primary, 0.70); }
+  50%  { color: $primary; text-shadow: 0 0 10px rgba($primary, 0.75); }
+  100% { color: rgba($primary, 0.70); }
+}
+
+.rw-desktop.wroot.fx-glow {
+  .card, .photo-frame, .image-frame {
+    border-width: 2px;
+    border-style: solid;
+    box-shadow: 0 0 16px rgba($primary, 0.25);
+    animation: fx-glow-border 2.8s ease-in-out infinite;
+  }
+  .gen-icon, .pl-icon, .mc-icon, .music-icon, .stat-icon, .disk-icon, .gh-stat-icon, .api-timer-icon, .clock-card .clock {
+    animation: fx-glow-accent 2.8s ease-in-out infinite;
+  }
+}
+
+@keyframes fx-float-bob {
+  0%   { margin-top: 0px; margin-bottom: 0px; }
+  50%  { margin-top: -3px; margin-bottom: 3px; }
+  100% { margin-top: 0px; margin-bottom: 0px; }
+}
+
+.rw-desktop.wroot.fx-float {
+  .gen-icon, .pl-icon, .mc-icon, .music-icon, .stat-icon, .disk-icon, .gh-stat-icon, .api-timer-icon, .pl-habit-icon {
+    animation: fx-float-bob 2.6s ease-in-out infinite;
+  }
+}
+
+@keyframes fx-float3d-levitate {
+  0% {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 10px rgba($primary, 0.20);
+    border-color: rgba($primary, 0.40);
+  }
+  50% {
+    margin-top: -8px;
+    margin-bottom: 8px;
+    box-shadow: 0 24px 50px -4px rgba(0, 0, 0, 0.70), 0 0 28px rgba($primary, 0.50);
+    border-color: rgba($primary, 0.95);
+  }
+  100% {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 10px rgba($primary, 0.20);
+    border-color: rgba($primary, 0.40);
+  }
+}
+
+.rw-desktop.wroot.fx-float3d,
+.rw-desktop.wroot.fx-3d {
+  .card, .photo-frame, .image-frame {
+    border-width: 2px;
+    border-style: solid;
+    animation: fx-float3d-levitate 3.2s ease-in-out infinite;
+  }
+  .gen-icon, .pl-icon, .mc-icon, .music-icon, .stat-icon, .disk-icon, .gh-stat-icon, .api-timer-icon, .clock-card .clock {
+    animation: fx-float-bob 2.4s ease-in-out infinite;
+  }
+}
+
+@keyframes fx-pulse-accent {
+  0%   { color: rgba($secondary, 0.55); }
+  50%  { color: $secondary; }
+  100% { color: rgba($secondary, 0.55); }
+}
+
+@keyframes fx-pulse-border {
+  0%   { border-color: rgba($outline_variant, 0.40); }
+  50%  { border-color: rgba($secondary, 0.85); }
+  100% { border-color: rgba($outline_variant, 0.40); }
+}
+
+.rw-desktop.wroot.fx-pulse {
+  .card, .photo-frame, .image-frame {
+    border-width: 2px;
+    border-style: solid;
+    animation: fx-pulse-border 3.0s ease-in-out infinite;
+  }
+  .gen-icon, .pl-icon, .mc-icon, .music-icon, .stat-icon, .disk-icon, .gh-stat-icon, .api-timer-icon,
+  .gen-title, .pl-title, .mc-title, .music-title, .clock-card .clock {
+    animation: fx-pulse-accent 3.0s ease-in-out infinite;
+  }
+}
+
+@keyframes fx-border-drift {
+  0%   { border-color: $primary; }
+  50%  { border-color: $tertiary; }
+  100% { border-color: $primary; }
+}
+
+.rw-desktop.wroot.fx-border {
+  .card, .photo-frame, .image-frame {
+    border: 2px solid $primary;
+    background-color: rgba($surface_container, 0.75);
+    box-shadow: 0 0 18px rgba($primary, 0.40), inset 0 0 10px rgba($primary, 0.12);
+    animation: fx-border-drift 6s ease-in-out infinite;
+  }
+  .clock-card .clock {
+    text-shadow: 0 0 14px rgba($primary, 0.8);
+  }
+}
+
+.rw-desktop .card,
+.rw-desktop .photo-frame,
+.rw-desktop .image-frame {
+  transition: background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease, margin 180ms ease;
+}
+
+.rw-desktop .card:hover,
+.rw-desktop .photo-frame:hover,
+.rw-desktop .image-frame:hover {
+  border-color: $primary;
+  background-color: rgba($surface_container_high, 0.88);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45), 0 0 18px rgba($primary, 0.4);
+}
+
+.rw-desktop.wroot.skin-bento .card,
+.rw-desktop.wroot.skin-bento .photo-frame,
+.rw-desktop.wroot.skin-bento .image-frame {
+  background-color: rgba($surface_container, 0.72);
+  border: 1px solid rgba($outline_variant, 0.45);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.22);
+}
+
+.rw-desktop.wroot.skin-bento .sys-chip {
+  background-color: rgba($surface_container_high, 0.45);
+  border: 1px solid rgba($outline_variant, 0.35);
+  border-radius: 14px;
+}
+
+.rw-desktop.wroot.skin-bento .clock-card .clock {
+  font-family: "Inter", sans-serif;
+  color: $on_surface;
+}
+
+.rw-desktop.wroot.skin-bento .clock-card .date {
+  color: $primary;
+}
+
+.rw-desktop.wroot.skin-cyber .card,
+.rw-desktop.wroot.skin-cyber .photo-frame,
+.rw-desktop.wroot.skin-cyber .image-frame {
+  background-color: rgba(10, 12, 18, 0.95);
+  border: 1.5px solid $primary;
+  border-radius: 4px;
+  box-shadow: 0 0 14px rgba($primary, 0.3), inset 0 0 10px rgba($primary, 0.08);
+}
+
+.rw-desktop.wroot.skin-cyber label,
+.rw-desktop.wroot.skin-cyber .card label,
+.rw-desktop.wroot.skin-cyber .clock-card label {
+  font-family: "JetBrainsMono Nerd Font Propo", monospace;
+}
+
+.rw-desktop.wroot.skin-cyber .sys-chip {
+  background-color: rgba(18, 22, 32, 0.88);
+  border: 1px solid rgba($primary, 0.35);
+  border-radius: 3px;
+}
+
+.rw-desktop.wroot.skin-cyber progress trough {
+  background-color: rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba($primary, 0.4);
+  border-radius: 0px;
+}
+
+.rw-desktop.wroot.skin-cyber progress highlight {
+  background-color: $primary;
+  border-radius: 0px;
+  box-shadow: 0 0 8px $primary;
+}
+
+.rw-desktop.wroot.skin-cyber circular-progress {
+  color: $primary;
+}
+
+.rw-desktop.wroot.skin-cyber .clock-card .clock {
+  font-family: "JetBrainsMono Nerd Font Propo", monospace;
+  font-weight: 700;
+  color: $primary;
+  text-shadow: 0 0 14px rgba($primary, 0.65);
+}
+
+.rw-desktop.wroot.skin-cyber .clock-card .date {
+  font-family: "JetBrainsMono Nerd Font Propo", monospace;
+  color: $secondary;
+  letter-spacing: 1px;
+}
+
+.rw-desktop.wroot.skin-cyber .clock-card .greeting {
+  font-family: "JetBrainsMono Nerd Font Propo", monospace;
+  color: $on_surface_variant;
+}
+
+.rw-desktop.wroot.skin-minimal .card,
+.rw-desktop.wroot.skin-minimal .photo-frame,
+.rw-desktop.wroot.skin-minimal .image-frame {
+  background-color: rgba($surface, 0.45);
+  border: none;
+  border-radius: 14px;
+  box-shadow: none;
+}
+
+.rw-desktop.wroot.skin-minimal .sys-chip {
+  background-color: rgba(255, 255, 255, 0.04);
+  border: none;
+  border-radius: 8px;
+}
+
+.rw-desktop.wroot.skin-minimal progress trough {
+  background-color: rgba($on_surface, 0.08);
+  border: none;
+  border-radius: 6px;
+}
+
+.rw-desktop.wroot.skin-minimal progress highlight {
+  background-color: $primary;
+  border-radius: 6px;
+}
+
+.rw-desktop.wroot.skin-minimal .clock-card .clock {
+  font-family: "Inter", sans-serif;
+  font-weight: 200;
+  color: rgba($on_surface, 0.9);
+  text-shadow: none;
+}
+
+.rw-desktop.wroot.skin-minimal .clock-card .date {
+  color: rgba($on_surface_variant, 0.85);
+  text-shadow: none;
+}
+
+.rw-desktop.wroot.skin-crt .card,
+.rw-desktop.wroot.skin-crt .photo-frame,
+.rw-desktop.wroot.skin-crt .image-frame {
+  background-color: rgba(5, 14, 8, 0.94);
+  border: 1.5px solid rgba(57, 255, 20, 0.75);
+  border-radius: 6px;
+  box-shadow: 0 0 16px rgba(57, 255, 20, 0.25), inset 0 0 12px rgba(57, 255, 20, 0.1);
+}
+
+.rw-desktop.wroot.skin-crt label,
+.rw-desktop.wroot.skin-crt .card label,
+.rw-desktop.wroot.skin-crt .clock-card label,
+.rw-desktop.wroot.skin-crt .sys-icon,
+.rw-desktop.wroot.skin-crt .disk-icon,
+.rw-desktop.wroot.skin-crt .music-icon,
+.rw-desktop.wroot.skin-crt .gen-button-icon {
+  color: #39ff14;
+  font-family: "JetBrainsMono Nerd Font Propo", monospace;
+  text-shadow: 0 0 4px rgba(57, 255, 20, 0.6);
+}
+
+.rw-desktop.wroot.skin-crt .sys-chip {
+  background-color: rgba(57, 255, 20, 0.06);
+  border: 1px solid rgba(57, 255, 20, 0.35);
+  border-radius: 4px;
+}
+
+.rw-desktop.wroot.skin-crt progress trough {
+  background-color: rgba(57, 255, 20, 0.12);
+  border: 1px solid rgba(57, 255, 20, 0.4);
+  border-radius: 2px;
+}
+
+.rw-desktop.wroot.skin-crt progress highlight {
+  background-color: #39ff14;
+  border-radius: 2px;
+  box-shadow: 0 0 8px #39ff14;
+}
+
+.rw-desktop.wroot.skin-crt circular-progress {
+  color: #39ff14;
+}
+
+.rw-desktop.wroot.skin-crt .clock-card .clock {
+  font-family: "JetBrainsMono Nerd Font Propo", monospace;
+  font-weight: 700;
+  color: #39ff14;
+  text-shadow: 0 0 16px rgba(57, 255, 20, 0.75);
+}
+
+.rw-desktop.wroot.skin-crt .clock-card .date {
+  color: rgba(57, 255, 20, 0.85);
+  font-family: "JetBrainsMono Nerd Font Propo", monospace;
+  text-shadow: 0 0 8px rgba(57, 255, 20, 0.6);
+}
+
+.rw-desktop.wroot.skin-crt .clock-card .greeting {
+  color: rgba(57, 255, 20, 0.7);
+  font-family: "JetBrainsMono Nerd Font Propo", monospace;
+}
+
+.rw-desktop.wroot.skin-glass .card,
+.rw-desktop.wroot.skin-glass .photo-frame,
+.rw-desktop.wroot.skin-glass .image-frame {
+  background-color: rgba($surface_container, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.rw-desktop.wroot.skin-glass .sys-chip {
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+}
+
+.rw-desktop.wroot.skin-glass progress trough {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
+
+.rw-desktop.wroot.skin-glass progress highlight {
+  background-color: $primary;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba($primary, 0.45);
+}
+
+.rw-desktop.wroot.skin-glass .clock-card .clock {
+  color: $on_surface;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+}
+
+.rw-desktop.wroot.skin-pixel .card,
+.rw-desktop.wroot.skin-pixel .photo-frame,
+.rw-desktop.wroot.skin-pixel .image-frame {
+  background-color: $surface_container;
+  border: 3px solid $on_surface;
+  border-radius: 0px;
+  box-shadow: 5px 5px 0 0 rgba(0, 0, 0, 0.65), inset -4px -4px 0 0 rgba(0, 0, 0, 0.35), inset 4px 4px 0 0 rgba(255, 255, 255, 0.14);
+}
+
+.rw-desktop.wroot.skin-pixel label {
+  font-family: "Adwaita Mono", "DejaVu Sans Mono", monospace;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.rw-desktop.wroot.skin-pixel .sys-chip {
+  background-color: $surface_container_highest;
+  border: 2px solid rgba($on_surface, 0.6);
+  border-radius: 0px;
+  box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.5);
+}
+
+.rw-desktop.wroot.skin-pixel progress trough {
+  min-height: 10px;
+  background-color: rgba(0, 0, 0, 0.55);
+  border: 2px solid $on_surface;
+  border-radius: 0px;
+}
+
+.rw-desktop.wroot.skin-pixel progress highlight {
+  min-height: 10px;
+  background-color: $tertiary;
+  border-radius: 0px;
+  box-shadow: inset 0 -3px 0 0 rgba(0, 0, 0, 0.3);
+}
+
+.rw-desktop.wroot.skin-pixel .clock-card .clock {
+  color: $tertiary;
+  font-weight: 800;
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.75);
+}
+
+.rw-desktop.wroot.skin-pixel .clock-card .date {
+  color: $primary;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.75);
+}
+
+.rw-desktop.wroot.skin-shell .card,
+.rw-desktop.wroot.skin-shell .photo-frame,
+.rw-desktop.wroot.skin-shell .image-frame {
+  background-color: rgba(12, 14, 19, 0.94);
+  border: 1px solid rgba($outline_variant, 0.5);
+  border-radius: 8px;
+  box-shadow: inset 0 3px 0 0 $tertiary, 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.rw-desktop.wroot.skin-shell label {
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  color: rgba(230, 232, 238, 0.92);
+}
+
+.rw-desktop.wroot.skin-shell .sys-chip {
+  background-color: transparent;
+  border: none;
+  border-left: 2px solid $secondary;
+  border-radius: 0px;
+}
+
+.rw-desktop.wroot.skin-shell progress trough {
+  background-color: rgba(255, 255, 255, 0.06);
+  border: none;
+  border-radius: 0px;
+}
+
+.rw-desktop.wroot.skin-shell progress highlight {
+  background-color: $tertiary;
+  border-radius: 0px;
+}
+
+.rw-desktop.wroot.skin-shell .clock-card .clock {
+  color: $tertiary;
+  font-weight: 700;
+}
+
+.rw-desktop.wroot.skin-shell .clock-card .date {
+  color: $primary;
+}
+
+.rw-desktop.wroot.skin-shell .clock-card .greeting {
+  color: $secondary;
+}
+
+.rw-desktop.wroot.skin-gnome .card,
+.rw-desktop.wroot.skin-gnome .photo-frame,
+.rw-desktop.wroot.skin-gnome .image-frame {
+  background-color: rgba($surface_container_high, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.18);
+}
+
+.rw-desktop.wroot.skin-gnome label {
+  font-family: "Adwaita Sans", "Cantarell", sans-serif;
+}
+
+.rw-desktop.wroot.skin-gnome .sys-chip {
+  background-color: rgba(255, 255, 255, 0.06);
+  border: none;
+  border-radius: 9px;
+}
+
+.rw-desktop.wroot.skin-gnome progress trough {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 99px;
+}
+
+.rw-desktop.wroot.skin-gnome progress highlight {
+  background-color: $primary;
+  border-radius: 99px;
+}
+
+.rw-desktop.wroot.skin-gnome .clock-card .clock {
+  font-weight: 800;
+  color: $on_surface;
+}
+
+.rw-desktop.wroot.skin-gnome .clock-card .date {
+  color: $on_surface_variant;
+}
+
+.rw-desktop.wroot.skin-clean .card,
+.rw-desktop.wroot.skin-clean .photo-frame,
+.rw-desktop.wroot.skin-clean .image-frame {
+  background-color: transparent;
+  background-image: none;
+  border: none;
+  box-shadow: none;
+}
+
+.rw-desktop.wroot.skin-clean label {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.rw-desktop.wroot.skin-clean .sys-chip {
+  background-color: transparent;
+  border: none;
+}
+
+.rw-desktop.wroot.skin-clean progress trough {
+  background-color: rgba(255, 255, 255, 0.16);
+  border: none;
+  border-radius: 99px;
+}
+
+.rw-desktop.wroot.skin-clean progress highlight {
+  background-color: $on_surface;
+  border-radius: 99px;
+}
+
+.rw-desktop.wroot.skin-clean .clock-card .clock {
+  color: $on_surface;
+}
+
+.rw-desktop.wroot.skin-notepad .card,
+.rw-desktop.wroot.skin-notepad .image-frame {
+  background-color: #fbf3c8;
+  background-image: linear-gradient(to right, transparent 22px, rgba(214, 72, 72, 0.5) 22px, rgba(214, 72, 72, 0.5) 23px, transparent 23px),
+    repeating-linear-gradient(to bottom, transparent 0px, transparent 21px, rgba(80, 120, 190, 0.28) 21px, rgba(80, 120, 190, 0.28) 22px);
+  border: none;
+  border-radius: 3px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.35);
+}
+
+.rw-desktop.wroot.skin-notepad .photo-frame {
+  border: 6px solid #fbf3c8;
+  border-radius: 3px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.35);
+}
+
+.rw-desktop.wroot.skin-notepad label {
+  font-family: "FantasqueSansM Nerd Font", monospace;
+  color: #3b3428;
+  text-shadow: none;
+}
+
+.rw-desktop.wroot.skin-notepad .sys-chip {
+  background-color: rgba(255, 255, 255, 0.35);
+  border: 1px dashed rgba(59, 52, 40, 0.35);
+  border-radius: 4px;
+}
+
+.rw-desktop.wroot.skin-notepad progress trough {
+  background-color: rgba(59, 52, 40, 0.12);
+  border: none;
+  border-radius: 2px;
+}
+
+.rw-desktop.wroot.skin-notepad progress highlight {
+  background-color: rgba(255, 150, 30, 0.75);
+  border-radius: 2px;
+}
+
+.rw-desktop.wroot.skin-notepad .clock-card .clock {
+  color: #2b4a8a;
+  font-weight: 700;
+}
+
+.rw-desktop.wroot.skin-notepad .clock-card .date {
+  color: #b23a3a;
+}
+
+.rw-desktop.wroot.editing {
+  animation: none;
+  .card, .clock-card, .photo-frame, .image-frame, .clock-card .clock,
+  .gen-icon, .pl-icon, .mc-icon, .music-icon, .stat-icon, .disk-icon, .gh-stat-icon, .api-timer-icon, .pl-habit-icon,
+  .gen-title, .pl-title, .mc-title, .music-title {
+    animation: none;
+  }
+}
+
+
+
+.rw-desktop.wroot.power-balanced * { transition-duration: 120ms; }
+
+.rw-desktop.wroot.power-performance,
+.rw-desktop.wroot.power-performance * { animation: none; transition: none; }
+
+.rw-desktop .rw-error { color: $error; font-size: 12px; padding: 6px; }

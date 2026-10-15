@@ -1,0 +1,23 @@
+(defwidget rw-procs-procs-card [wid]
+  (box :class "card gen procs accent-${wcfg.o[wid]?.accent_class ?: 'primary'}" :orientation "v"
+    :space-evenly false :spacing 8 :style "min-width: ${wcfg.o[wid]?.inner ?: 382}px;"
+    (rw-shared-gen-head :wid wid)
+    (label :class "gen-sub" :halign "start" :visible {(wcfg.g[wid]?.total ?: 0) == 0} :text "Nada que mostrar")
+    (for r in {wcfg.g[wid]?.rows ?: []}
+      (box :class "proc-row ${r.paused ? 'paused' : ''}" :orientation "h" :space-evenly false :spacing 8
+        (label :class "proc-dot" :text {r.window ? "󰖯" : "󰒲"} :tooltip {r.window ? "Con ventana" : "En segundo plano"})
+        (label :class "proc-name" :halign "start" :hexpand true :text {r.name} :tooltip "PID ${r.pid}")
+        (label :class "proc-num" :text {r.cpu})
+        (label :class "proc-num mem" :text {r.mem})
+        (button :class "proc-btn" :tooltip {r.paused ? "Reanudar" : "Pausar"}
+          :onclick "@CTL@ action ${wid} proc pause ${r.pid} &" {r.paused ? "󰐊" : "󰏤"})
+        (button :class "proc-btn" :tooltip "Terminar (cerrar normalmente)"
+          :onclick "@CTL@ action ${wid} proc term ${r.pid} &" "󰅖")
+        (button :class "proc-btn kill" :tooltip "Matar (forzar, SIGKILL)"
+          :onclick "@CTL@ action ${wid} proc kill ${r.pid} &" "󰚌")))))
+
+(defwindow rw-procs [wid]
+  :monitor 0 :geometry (geometry :x "64px" :y "110px" :width "0px" :height "0px" :anchor "top left")
+  :stacking "bg" :exclusive false :focusable false :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-procs wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-procs-procs-card :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

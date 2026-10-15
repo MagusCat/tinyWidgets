@@ -1,0 +1,26 @@
+(defwidget rw-net-net-card [wid]
+  (box :class "card gen net-card ${(wcfg.o[wid]?.card_class ?: '')} ${(wcfg.o[wid]?.pad_class ?: '')} accent-${wcfg.o[wid]?.accent_class ?: 'primary'}"
+    :orientation "v" :space-evenly false :spacing 8
+    :style "min-width: ${wcfg.o[wid]?.inner ?: 300}px;"
+    (rw-shared-gen-head :wid wid)
+    (box :orientation "h" :space-evenly true :spacing 10
+      (box :class "net-speed-box" :orientation "h" :space-evenly false :valign "center"
+        (label :class "net-icon down" :text "󰇚")
+        (box :orientation "v" :space-evenly false
+          (label :class "net-speed-val" :halign "start" :text {wcfg.g[wid]?.down ?: "0 KB/s"})
+          (label :class "net-speed-label" :halign "start" :text "Bajada")))
+      (box :class "net-speed-box" :orientation "h" :space-evenly false :valign "center"
+        (label :class "net-icon up" :text "󰕒")
+        (box :orientation "v" :space-evenly false
+          (label :class "net-speed-val" :halign "start" :text {wcfg.g[wid]?.up ?: "0 KB/s"})
+          (label :class "net-speed-label" :halign "start" :text "Subida"))))
+    (box :visible {(wcfg.o[wid]?.show_ip ?: "yes") == "yes"}
+      :orientation "h" :space-evenly false :spacing 6 :valign "center"
+      (label :class "net-ip-badge" :text "󰩟 ${wcfg.g[wid]?.ip ?: '127.0.0.1'}")
+      (label :class "gen-sub" :halign "end" :hexpand true :text "${wcfg.g[wid]?.iface ?: 'red'}"))))
+
+(defwindow rw-net [wid]
+  :monitor 0 :geometry (geometry :x "64px" :y "110px" :width "0px" :height "0px" :anchor "top left")
+  :stacking "bg" :exclusive false :focusable false :namespace "@NAMESPACE@${wid}"
+  (box :orientation "v" :space-evenly false :class "rw-desktop rw-net wroot ${wcfg.o[wid]?.fx_class ?: ''} ${wcfg.o[wid]?.anim_class ?: ''} ${wcfg.o[wid]?.skin_class ?: 'skin-bento'}" :style {wcfg.o[wid]?.power_style ?: ""} (rw-net-net-card :wid wid)
+    (label :class "rw-error" :visible {(wcfg.g[wid]?.error ?: "") != ""} :limit-width 42 :text {wcfg.g[wid]?.error ?: ""})))

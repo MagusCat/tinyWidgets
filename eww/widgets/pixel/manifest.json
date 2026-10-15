@@ -1,0 +1,129 @@
+{
+  "icon": "󰹑",
+  "name": "Pixel Art",
+  "desc": "Personajes y animaciones retro en pixel art con interactividad",
+  "group": "generic",
+  "options": [
+    {
+      "key": "title",
+      "label": "Título",
+      "type": "text",
+      "default": "Pixel Art"
+    },
+    {
+      "key": "icon",
+      "label": "Icono (Nerd Font)",
+      "type": "text",
+      "default": "󰹑"
+    },
+    {
+      "key": "header",
+      "label": "Encabezado (icono + título)",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "sprite",
+      "label": "Personaje / Sprite",
+      "type": "choice",
+      "default": "Gatito 8-bit",
+      "choices": [
+        "Gatito 8-bit",
+        "Pikachu",
+        "Fantasmita Arcade",
+        "Corazón Retro",
+        "Espada Legendaria",
+        "Poción Mágica",
+        "Dino Corredor",
+        "Hongo 1-Up",
+        "Personalizado"
+      ]
+    },
+    {
+      "key": "palette",
+      "label": "Paleta de colores",
+      "type": "choice",
+      "default": "Original",
+      "choices": [
+        "Original",
+        "Game Boy",
+        "Cyberpunk",
+        "Monocromo",
+        "Retro 80s",
+        "Tema del sistema"
+      ]
+    },
+    {
+      "key": "size",
+      "label": "Tamaño de píxel",
+      "type": "choice",
+      "default": "Mediano",
+      "choices": [
+        "Pequeño",
+        "Mediano",
+        "Grande"
+      ]
+    },
+    {
+      "key": "animate",
+      "label": "Animación activa",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "show_caption",
+      "label": "Mostrar subtítulo",
+      "type": "bool",
+      "default": "yes"
+    },
+    {
+      "key": "click_action",
+      "label": "Al hacer click",
+      "type": "choice",
+      "default": "Reaccionar / Poke",
+      "choices": [
+        "Reaccionar / Poke",
+        "Siguiente personaje",
+        "Nada"
+      ]
+    },
+    {
+      "key": "custom_art",
+      "label": "Arte personalizado (si elige Personalizado)",
+      "type": "longtext",
+      "default": ""
+    },
+    {
+      "key": "accent",
+      "label": "Color",
+      "type": "choice",
+      "default": "Primario",
+      "choices": [
+        "Primario",
+        "Secundario",
+        "Terciario",
+        "Rojo"
+      ]
+    },
+    {
+      "key": "width",
+      "label": "Ancho (px)",
+      "type": "size",
+      "default": "280"
+    }
+  ],
+  "id": "pixel",
+  "version": 1,
+  "order": 22,
+  "base_id": "pixel",
+  "size": [
+    280,
+    220
+  ],
+  "provider": "provider.py",
+  "interval": 0.6,
+  "requires": [],
+  "initial": {},
+  "decision": "PNG sprites pendiente, sin prioridad",
+  "execution": "inline"
+}
