@@ -305,7 +305,7 @@ def load_animation():
             out[key] = max(50, min(2000, int(out[key])))
         except (TypeError, ValueError):
             out[key] = ANIM_DEFAULTS[key]
-    for key,lo,hi in (("workspace_delay",0,5000),("delay_in",0,5000),("max_parallel",1,16),("fps",12,30)):
+    for key,lo,hi in (("workspace_delay",0,5000),("delay_in",0,5000),("max_parallel",1,16),("fps",12,60)):
         try:out[key]=max(lo,min(hi,int(out[key])))
         except (TypeError,ValueError):out[key]=ANIM_DEFAULTS[key]
     if isinstance(out['palette_animation'],str):out['palette_animation']=out['palette_animation'].lower() in ('true','yes','1','on')

@@ -96,7 +96,7 @@ Animation settings are available in the editor and through the CLI:
 widgetctl anim when=workspace workspace_delay=650 delay_in=180 max_parallel=4 fps=24 palette_animation=true
 ```
 
-`workspace_delay` waits for navigation to settle; `delay_in` adds hidden preparation time before entry. `max_parallel` limits simultaneous effects, including when slow providers become ready together. Additional widgets wait their turn; `fps` caps motion updates between 12 and 30. The motion stream keeps only currently mapped widgets. Power policies and editor mode can reduce or disable effects.
+`workspace_delay` waits for navigation to settle; `delay_in` adds hidden preparation time before entry. `max_parallel` limits simultaneous effects, including when slow providers become ready together. Additional widgets wait their turn; `fps` caps motion updates between 12 and 60. For smoother motion, use `widgetctl anim fps=60`; the actual rendered rate depends on Eww and the compositor. The motion stream keeps only currently mapped widgets. Power policies and editor mode can reduce or disable effects.
 
 Palette changes animate existing windows without reopening or moving them. A newer workspace transition cancels stale work and restores surviving global widgets. Invalid palettes leave colors and visibility intact.
 

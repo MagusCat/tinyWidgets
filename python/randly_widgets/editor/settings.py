@@ -170,7 +170,7 @@ class SettingsMixin:
         self.form_row(grid,7,'Espera del workspace (ms)',spin('workspace_delay',0,3000,50,650),'Pausa tras navegar antes de abrir widgets')
         self.form_row(grid,8,'Espera antes del IN (ms)',spin('delay_in',0,3000,20,180),'Tiempo con el widget oculto antes de iniciar la entrada')
         self.form_row(grid,9,'Animaciones simultáneas',spin('max_parallel',1,16,1,4),'Límite de efectos activos; el resto espera su turno')
-        self.form_row(grid,10,'Cuadros por segundo',spin('fps',12,30,1,24),'Frecuencia máxima del motor durante las transiciones')
+        self.form_row(grid,10,'Cuadros por segundo',spin('fps',12,60,1,24),'Frecuencia máxima del motor durante las transiciones')
         palette=Gtk.Switch(active=bool(anim.get('palette_animation',True)))
         switches['palette_animation']=palette
         self.form_row(grid,11,'Animar cambio de paleta',palette,'OUT, nuevos colores e IN sin reabrir ventanas')

@@ -122,3 +122,30 @@ pub fn wait(ms: u64, valid: impl Fn() -> bool) -> bool {
     }
     valid()
 }
+
+/// Fractional milliseconds matter at 60 FPS; don't round to a 16 ms loop.
+pub fn frame_period(settings: &Value) -> Duration {
+    Duration::from_secs_f64(1. / settings["fps"].as_u64().unwrap_or(24).clamp(12, 60) as f64)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::json;
+    #[test]
+    fn frame_clock_supports_sixty_and_bounds_the_budget() {
+        assert_eq!(
+            frame_period(&json!({"fps":60})),
+            Duration::from_secs_f64(1. / 60.)
+        );
+        assert_eq!(
+            frame_period(&json!({"fps":999})),
+            frame_period(&json!({"fps":60}))
+        );
+        assert_eq!(
+            frame_period(&json!({"fps":0})),
+            Duration::from_secs_f64(1. / 12.)
+        );
+        assert_eq!(frame_period(&json!({})), Duration::from_secs_f64(1. / 24.));
+    }
+}

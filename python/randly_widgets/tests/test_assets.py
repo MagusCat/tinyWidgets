@@ -67,3 +67,8 @@ class AssetTests(unittest.TestCase):
             self.assertEqual((settings['anim_in'],settings['delay_in'],settings['workspace_delay'],settings['max_parallel'],settings['fps']),('vortex',240,700,3,20))
             appearance.save_animation(max_parallel=999,fps=1,delay_in=-50)
             settings=appearance.load_animation();self.assertEqual((settings['max_parallel'],settings['fps'],settings['delay_in']),(16,12,0))
+
+            appearance.save_animation(fps=60)
+            self.assertEqual(appearance.load_animation()['fps'],60)
+            appearance.save_animation(fps=999)
+            self.assertEqual(appearance.load_animation()['fps'],60)

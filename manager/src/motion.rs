@@ -1,7 +1,11 @@
 use crate::io::{self, Paths};
 use anyhow::Result;
 use serde_json::{json, Map, Value};
-use std::{collections::HashMap, thread, time::Duration};
+use std::{
+    collections::HashMap,
+    thread,
+    time::{Duration, Instant},
+};
 pub struct Request {
     pub ids: Vec<String>,
     pub reveal: bool,
@@ -289,6 +293,7 @@ pub fn stream(p: &Paths) -> Result<()> {
     let (mut applied, mut settings) = (Value::Null, Value::Null);
     let mut visible = Value::Null;
     loop {
+        let tick_started = Instant::now();
         if crate::STOP.load(std::sync::atomic::Ordering::Relaxed) || unsafe { libc::getppid() } == 1
         {
             return Ok(());
@@ -353,11 +358,13 @@ pub fn stream(p: &Paths) -> Result<()> {
                 last = frames
             }
         }
-        thread::sleep(Duration::from_millis(if running {
-            1000 / settings["fps"].as_u64().unwrap_or(24).clamp(12, 30)
+        let period = if running {
+            crate::animation::frame_period(&settings)
         } else {
-            100
-        }));
+            Duration::from_millis(100)
+        };
+        // Account for calculation/serialization instead of adding it to each frame.
+        thread::sleep(period.saturating_sub(tick_started.elapsed()));
     }
 }
 #[cfg(test)]
