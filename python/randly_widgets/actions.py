@@ -185,6 +185,9 @@ def cmd_menu():
 
 def cmd_run(wid):
     w = find(load(), wid)
+    if w and w['window']=='button':
+        from .launchers import entries,launch
+        if entries(w):launch(w,0);return
     cmd = w and options(w).get("command", "").strip()
     if cmd:
         subprocess.Popen(["setsid", "-f", "sh", "-c", cmd], stdin=subprocess.DEVNULL,

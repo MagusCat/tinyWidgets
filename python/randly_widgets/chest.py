@@ -17,10 +17,10 @@ CONF = os.path.join(EWW_DIR, "chest.conf")
 COLS, ROWS = 9, 3
 
 
-def parse():
+def parse(source=None):
     slots = []
     try:
-        with open(CONF, encoding="utf-8", errors="replace") as fh:
+        with open(source or CONF, encoding="utf-8", errors="replace") as fh:
             for raw in fh:
                 line = raw.rstrip("\r\n")
                 if not line.strip() or line.lstrip().startswith("#"):
@@ -44,8 +44,8 @@ def clean(text):
                    if c.isprintable() or unicodedata.category(c) == "Co")
 
 
-def render():
-    slots = parse()
+def data(slots=None):
+    slots = parse() if slots is None else slots
     rows = []
     for r in range(ROWS):
         row = []
@@ -55,12 +55,16 @@ def render():
             row.append({
                 "i": i,
                 "icon": clean(s["icon"]) if s else "",
-                "label": clean(s["label"]) if s else "",
-                "used": bool(s and s["cmd"]),
+                "label": clean(s.get("name",s.get("label",""))) if s else "",
+                "used": bool(s and (s.get("cmd") or s.get("desktop_id"))),
             })
         rows.append(row)
     labels = [slot["label"] for row in rows for slot in row]
-    return json.dumps({"rows": rows, "labels": labels, "count": sum(1 for s in slots if s)}, ensure_ascii=False)
+    return {"rows": rows, "labels": labels, "count": sum(1 for s in slots[:COLS*ROWS] if s)}
+
+
+def render():
+    return json.dumps(data(),ensure_ascii=False)
 
 
 def run(index):

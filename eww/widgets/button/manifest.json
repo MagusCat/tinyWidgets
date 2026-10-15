@@ -5,28 +5,34 @@
   "group": "generic",
   "options": [
     {
+      "key": "launchers",
+      "label": "Aplicaciones",
+      "type": "apps",
+      "default": "[]"
+    },
+    {
       "key": "title",
       "label": "Título",
       "type": "text",
-      "default": "Terminal"
+      "default": "Acceso"
     },
     {
       "key": "subtitle",
       "label": "Subtítulo",
       "type": "text",
-      "default": "Abrir kitty"
+      "default": ""
     },
     {
       "key": "icon",
       "label": "Icono (Nerd Font)",
       "type": "text",
-      "default": ""
+      "default": "󰀻"
     },
     {
       "key": "command",
       "label": "Comando al hacer click",
       "type": "text",
-      "default": "kitty"
+      "default": ""
     },
     {
       "key": "accent",

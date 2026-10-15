@@ -57,7 +57,7 @@ cd tinyWidgets
 
 All three scripts accept `--offline` if Cargo dependencies are already cached. Production binaries are built in `target/release/`; test-only IPC support is never included in the installed manager.
 
-The installer places the launcher in `~/.local/bin`, binaries and Python modules in `~/.local/lib`, and components in `~/.config/eww/widgets`. Existing instances, profiles and custom components are preserved. Replaced files are backed up under `~/.local/state/tinyWidgets/install-backups/`. An existing Eww configuration belonging to another project is rejected.
+The installer places the launcher in `~/.local/bin`, binaries and Python modules in `~/.local/lib`, and components in `~/.config/eww/widgets`. Existing instances, profiles and custom components are preserved. Unchanged files are left untouched. Replaced files are backed up under `~/.local/state/tinyWidgets/install-backups/`. An existing Eww configuration belonging to another project is rejected.
 
 Inside your Wayfire session:
 
@@ -81,6 +81,12 @@ widgetctl editor
 Add `~/.local/bin` to `PATH` to use the short commands. Use `widgetctl --config /path/to/profile ...` for a separate Eww profile.
 
 `widgetctl theme` plays OUT, applies valid colors and plays IN on existing windows. Set `palette_animation=false` for a color-only update. `widgetctl reload` validates and applies component changes and may reopen windows. After rebuilding/reinstalling the native theme bridge, close the editor and run `widgetctl reload` once to load the new library.
+
+## Your own shortcuts
+
+Apps, Chest and action-button widgets start without preselected applications. Open a widget's settings, then **Aplicaciones → Elegir aplicación** to search installed desktop entries. Enter selects a result; Escape returns to the list. Add, rename, reorder or remove shortcuts, or enter a custom command. Each instance keeps its own list; Chest supports 27 slots and the action button keeps one target.
+
+Desktop entries launch through Gio, so their `Exec` fields and file placeholders are handled by the desktop. Custom commands remain explicit shell commands. Existing personal `chest.conf` slots are imported once into existing Chest instances during installation, with a backup; new instances stay empty.
 
 ## Motion without a pile-up
 

@@ -20,6 +20,8 @@ def install(home):
         source, dest = Path(source), Path(dest)
         if (dest.exists() or dest.is_symlink()) and not replace:
             return
+        if dest.is_file() and not dest.is_symlink() and dest.read_bytes()==source.read_bytes() and (dest.stat().st_mode&0o777)==(source.stat().st_mode&0o777):
+            return
         if dest.exists() or dest.is_symlink():
             saved = backup / dest.relative_to(home)
             saved.parent.mkdir(parents=True, exist_ok=True)
@@ -53,6 +55,22 @@ def install(home):
     put(ROOT/'bin/widgetctl', home/'.local/bin/widgetctl')
     palette = home/'.local/state/randly-widgets/palette.scss'
     put(config/'_colors.scss', palette, replace=False)
+    # Import personal legacy chest slots once, never populate new instances.
+    instances=config/'instances.json'
+    legacy=config/'chest.conf'
+    if legacy.is_file():
+        sys.path.insert(0,str(ROOT/'python'))
+        from randly_widgets.launchers import migrate_chest
+        from randly_widgets.storage import locked,write_json
+        with locked(str(instances)+'.lock'):
+            try:document=json.loads(instances.read_text())
+            except (OSError,ValueError):document={}
+            widgets=document.get('widgets')
+            if document.get('version')==1 and isinstance(widgets,list) and migrate_chest(widgets,legacy):
+                saved=backup/instances.relative_to(home);saved.parent.mkdir(parents=True,exist_ok=True)
+                shutil.copy2(instances,saved)
+                document['revision']=document.get('revision',0)+1
+                write_json(instances,document);changed.append(str(instances.relative_to(home)))
     if fresh:
         env = {**os.environ, 'HOME':str(home), 'RANDLY_WIDGETS_CONFIG':str(config), 'PYTHONPATH':str(home/'.local/lib')}
         subprocess.run([sys.executable, '-c', 'from randly_widgets.composer import build,publish; publish(build())'], env=env, check=True)

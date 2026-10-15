@@ -56,5 +56,21 @@ class InstallTests(unittest.TestCase):
             self.assertEqual(json.loads((config/'instances.json').read_text())['widgets'], [])
             self.assertEqual(list(home.rglob("editor-sync-service.json")), [])
 
+    def test_legacy_chest_import_is_backed_up_and_preserves_other_instances(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            home=Path(tmp);config=home/'.config/eww';config.mkdir(parents=True)
+            (config/'.modular-active').write_text('1');(config/'eww.yuck').write_text('keep')
+            original={'version':1,'revision':3,'widgets':[{'id':'chest','window':'chest','opts':{}},{'id':'clock','window':'clock','opts':{'width':'333'}}]}
+            (config/'instances.json').write_text(json.dumps(original));(config/'chest.conf').write_text('X | Mine | echo mine\n')
+            backup=installer.install(home)
+            after=json.loads((config/'instances.json').read_text())
+            self.assertEqual(json.loads(after['widgets'][0]['opts']['launchers'])[0]['cmd'],'echo mine')
+            self.assertEqual(after['widgets'][1],original['widgets'][1])
+            self.assertEqual(json.loads((backup/'.config/eww/instances.json').read_text()),original)
+            asset=config/'widgets/chest/assets/chest-open.png';stamp=(asset.stat().st_ino,asset.stat().st_mtime_ns)
+            installer.install(home)
+            self.assertEqual((asset.stat().st_ino,asset.stat().st_mtime_ns),stamp)
+            self.assertEqual(json.loads((config/'instances.json').read_text()),after)
+
 if __name__ == '__main__':
     unittest.main()

@@ -5,6 +5,12 @@
   "group": "generic",
   "options": [
     {
+      "key": "launchers",
+      "label": "Aplicaciones",
+      "type": "apps",
+      "default": "[]"
+    },
+    {
       "key": "title",
       "label": "Título",
       "type": "text",
@@ -32,12 +38,6 @@
         "Cuadrícula 2x4",
         "Píldoras con nombres"
       ]
-    },
-    {
-      "key": "apps",
-      "label": "Apps a mostrar",
-      "type": "text",
-      "default": "term,web,files,discord,code,music,editor"
     },
     {
       "key": "labels",

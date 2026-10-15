@@ -219,6 +219,9 @@ def widget_action(args):
     if kind=='cat' and action=='poke':
         import random
         update_event(wid,dict(says=random.choice(['meow','mrrp?','purrr','nya~','mew!']),until=now+2.5))
+    elif kind=='apps' and action=='launch':
+        from .launchers import launch
+        launch(widget,int(args[2]))
     elif kind=='chest':
         if action in ('toggle','close'):update_event(wid,dict(open=not read_event(wid).get('open',False) if action=='toggle' else False,hover=-1))
         elif action=='hover':update_event(wid,dict(hover=int(args[2])))
@@ -228,9 +231,8 @@ def widget_action(args):
             if name not in ('raccoon','rat'):raise ValueError('Mascota inválida')
             update_event(wid,{name+'_says':random.choice(['zzz…','*yawn*','meow?'] if name=='raccoon' else ['squeak!','cheese?','eek!']),name+'_until':now+2})
         elif action=='launch':
-            from .chest import parse
-            slots=parse();i=int(args[2]);update_event(wid,dict(open=False,hover=-1))
-            if 0<=i<len(slots) and slots[i] and slots[i]['cmd']:subprocess.Popen(['sh','-c',slots[i]['cmd']],start_new_session=True)
+            from .launchers import launch
+            launch(widget,int(args[2]));update_event(wid,dict(open=False,hover=-1))
     elif kind=='procs' and action=='proc':
         try:
             process_action(args[2:])

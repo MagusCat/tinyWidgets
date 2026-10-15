@@ -23,7 +23,10 @@ class SettingsMixin:
             grid.attach(self.label("Solo tamaño: arrastra sus puntos.", "panel-sub"), 0, 0, 2, 1)
         for row, (key, text, kind, default, *rest) in enumerate(shown):
             value = str(current.get(key, default))
-            if kind == "bool":
+            if kind == "apps":
+                from .launchers import launcher_control
+                ctl=launcher_control(self,wid,key)
+            elif kind == "bool":
                 ctl = Gtk.Switch(active=value == "yes")
                 ctl.connect("notify::active",
                             lambda s, _p, k=key: self.set_option(wid, k, "yes" if s.get_active() else "no"))

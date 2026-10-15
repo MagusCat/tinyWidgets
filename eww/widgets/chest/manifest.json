@@ -1,9 +1,16 @@
 {
   "icon": "󰜦",
   "name": "Cofre",
-  "desc": "Lanzador de apps estilo Minecraft (chest.conf)",
+  "desc": "Cofre con accesos configurables por instancia",
   "single": true,
-  "options": [],
+  "options": [
+    {
+      "key": "launchers",
+      "label": "Aplicaciones",
+      "type": "apps",
+      "default": "[]"
+    }
+  ],
   "id": "chest",
   "version": 1,
   "order": 8,
@@ -27,7 +34,7 @@
     "rat_says": ""
   },
   "decision": "conservar",
-  "execution": "worker",
+  "execution": "inline",
   "assets": [
     "chest-closed.png",
     "chest-open.png",

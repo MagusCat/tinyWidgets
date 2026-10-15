@@ -1,5 +1,5 @@
-(defwidget rw-apps-app-item [app show_label style]
-  (eventbox :class "app-item-box" :cursor "pointer" :onclick "${app.cmd}"
+(defwidget rw-apps-app-item [wid app show_label style]
+  (eventbox :class "app-item-box" :cursor "pointer" :onclick "@CTL@ action ${wid} launch ${app.id} &"
     (box :class "app-btn ${style}" :orientation {style == 'pills' ? 'h' : 'v'} :space-evenly false :spacing 6 :tooltip {app.name}
       (label :class "app-icon" :text {app.icon})
       (label :class "app-name" :visible {show_label == "yes"} :text {app.name}))))
@@ -9,10 +9,11 @@
     :orientation "v" :space-evenly false :spacing 10
     :style "min-width: ${wcfg.o[wid]?.inner ?: 320}px;"
     (rw-shared-gen-head :wid wid)
+    (label :visible {wcfg.g[wid]?.empty ?: true} :text "Agrega aplicaciones desde el editor" :wrap true)
     (box :class "apps-container ${(wcfg.o[wid]?.style ?: 'Dock horizontal') == 'Cuadrícula 2x4' ? 'grid' : 'dock'}"
       :orientation "h" :space-evenly true :spacing 8
       (for app in {wcfg.g[wid]?.apps ?: []}
-        (rw-apps-app-item :app app :show_label {wcfg.o[wid]?.labels ?: "no"} :style {(wcfg.o[wid]?.style ?: "Dock horizontal") == "Píldoras con nombres" ? "pills" : "icon-only"})))))
+        (rw-apps-app-item :wid wid :app app :show_label {wcfg.o[wid]?.labels ?: "no"} :style {(wcfg.o[wid]?.style ?: "Dock horizontal") == "Píldoras con nombres" ? "pills" : "icon-only"})))))
 
 (defwindow rw-apps [wid]
   :monitor 0 :geometry (geometry :x "64px" :y "110px" :width "0px" :height "0px" :anchor "top left")
