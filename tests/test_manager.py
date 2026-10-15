@@ -103,6 +103,25 @@ class NativeManagerTests(unittest.TestCase):
   env={**self.env,'LD_PRELOAD':str(ROOT/'target/release/librandly_widget_theme.so'),'RANDLY_WIDGETS_THEME_CSS':str(self.root/'theme.css')}
   result=subprocess.run([str(probe)],env=env,capture_output=True,text=True,timeout=3)
   self.assertEqual(result.returncode,0,result.stderr);self.assertEqual(result.stdout.strip(),'')
+ def test_live_theme_preserves_widget_local_resize_priority(self):
+  # Run the actual bridge callback with a screen spy, without a compositor.
+  # GTK gives widget-local :style precedence at equal APPLICATION priority.
+  mock=self.root/'screen.c'
+  mock.write_text('#include <stdio.h>\nvoid *gdk_screen_get_default(void){return (void*)1;}\nvoid gtk_style_context_add_provider_for_screen(void *s,void *p,unsigned priority){printf("%u\\n",priority);fflush(stdout);}\n')
+  shim=self.root/'screen.so'
+  result=subprocess.run(['cc','-shared','-fPIC',str(mock),'-o',str(shim)],capture_output=True,text=True,timeout=20)
+  self.assertEqual(result.returncode,0,result.stderr)
+  source=self.root/'callback.rs'
+  source.write_text('extern "C" {fn g_main_context_iteration(c:*mut std::ffi::c_void, wait:i32)->i32;} fn main(){for _ in 0..4{std::thread::sleep(std::time::Duration::from_millis(60)); unsafe {g_main_context_iteration(std::ptr::null_mut(),0);}}}')
+  directory=self.root/'callback';directory.mkdir();probe=directory/'eww'
+  result=subprocess.run(['rustc',str(source),'-l','glib-2.0','-o',str(probe)],capture_output=True,text=True,timeout=20)
+  self.assertEqual(result.returncode,0,result.stderr)
+  css=self.root/'resize.css';css.write_text('.rw-desktop * {all:unset;}')
+  env={**self.env,'LD_PRELOAD':str(shim)+' '+str(ROOT/'target/release/librandly_widget_theme.so'),'RANDLY_WIDGETS_THEME_CSS':str(css)}
+  result=subprocess.run([str(probe)],env=env,capture_output=True,text=True,timeout=3)
+  self.assertEqual(result.returncode,0,result.stderr)
+  self.assertTrue(result.stdout.strip(),result.stderr)
+  self.assertLessEqual(int(result.stdout.strip()),600,'Global palette CSS must not override Eww inline min-width/height')
  def test_native_frames_use_existing_protocol_and_stop_on_signal(self):
   self.runtime.mkdir(parents=True,exist_ok=True)
   (self.runtime/'data-snapshot.json').write_text(json.dumps({'g':{'a':{'text':'ready'}},'r':{'a':True},'o':{}}))

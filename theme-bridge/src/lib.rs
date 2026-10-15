@@ -83,7 +83,11 @@ extern "C" fn update(_: *mut c_void) -> i32 {
                 state.stamp = stamp;
                 return;
             }
-            gtk_style_context_add_provider_for_screen(screen, provider, 601);
+            // Eww inline :style uses APPLICATION priority (600). At equal
+            // priority GTK prefers widget-local providers to screen providers.
+            // A higher priority would let our `all: unset` erase inline sizes.
+            // https://docs.gtk.org/gtk3/type_func.StyleContext.add_provider_for_screen.html
+            gtk_style_context_add_provider_for_screen(screen, provider, 600);
             if state.provider != 0 {
                 let previous = state.provider as *mut c_void;
                 gtk_style_context_remove_provider_for_screen(screen, previous);
